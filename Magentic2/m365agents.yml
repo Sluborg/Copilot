@@ -41,6 +41,11 @@ provision:
       outputDir: ./appPackage/.generated
       typeSpecConfigPath: ./tspconfig.yaml
 
+  - uses: cli/runNpmCommand
+    name: Patch API plugin auth
+    with:
+      args: run patch:plugin-auth
+
   # Build app package with latest env value
   - uses: teamsApp/zipAppPackage
     with:
@@ -91,6 +96,11 @@ publish:
       manifestPath: ./appPackage/manifest.json
       outputDir: ./appPackage/.generated
       typeSpecConfigPath: ./tspconfig.yaml
+
+  - uses: cli/runNpmCommand
+    name: Patch API plugin auth
+    with:
+      args: run patch:plugin-auth
 
   # Build app package with latest env value
   - uses: teamsApp/zipAppPackage

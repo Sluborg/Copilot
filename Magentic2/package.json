@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "compile": "tsp compile ./src/agent/main.tsp --config ./tspconfig.yaml",
-    "generate:env": "node scripts/generate-env.js"
+    "generate:env": "node scripts/generate-env.js",
+    "patch:plugin-auth": "node scripts/patch-plugin-auth.js"
   },
   "devDependencies": {
     "@microsoft/typespec-m365-copilot": "^1.0.0",

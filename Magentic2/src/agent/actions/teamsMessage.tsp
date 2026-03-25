@@ -4,9 +4,20 @@ import "@microsoft/typespec-m365-copilot";
 using TypeSpec.Http;
 using TypeSpec.M365.Copilot.Actions;
 
+@authReferenceId("graph")
+model GraphOAuth2Auth is OAuth2Auth<
+  [{
+    type: OAuth2FlowType.authorizationCode;
+    authorizationUrl: "https://login.microsoftonline.com/common/oauth2/v2.0/authorize";
+    tokenUrl: "https://login.microsoftonline.com/common/oauth2/v2.0/token";
+    scopes: ["User.Read", "Chat.ReadWrite"];
+  }]
+>;
+
 @service
 @server("https://graph.microsoft.com/v1.0")
 @actions(TeamsAPI.ACTIONS_METADATA)
+@useAuth(GraphOAuth2Auth)
 namespace TeamsAPI {
   /**
    * Metadata for the Microsoft Teams API actions.
