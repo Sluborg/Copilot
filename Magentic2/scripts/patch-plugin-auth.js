@@ -51,20 +51,31 @@ function patchPluginAuth(pluginDoc, referenceId) {
 (function main() {
   const root = path.resolve(__dirname, "..");
   const generatedDir = path.join(root, "appPackage", ".generated");
-  const specsPath = path.join(generatedDir, "specs", "openapi.json");
+  const specsDir = path.join(generatedDir, "specs");
 
-  if (!fs.existsSync(specsPath)) {
-    console.error("Missing OpenAPI file:", specsPath);
-    process.exitCode = 1;
+  // Collect all generated OpenAPI specs (handles single or multi-API output)
+  let specFiles = [];
+  if (fs.existsSync(specsDir)) {
+    specFiles = fs.readdirSync(specsDir)
+      .filter((f) => f.endsWith(".json"))
+      .map((f) => path.join(specsDir, f));
+  }
+
+  if (specFiles.length === 0) {
+    console.log("No OpenAPI spec files found – skipping plugin auth patch.");
     return;
   }
 
-  const openApiDoc = readJson(specsPath);
-  const referenceId = getAuthReferenceId(openApiDoc);
+  // Find a referenceId across all specs
+  let referenceId = null;
+  for (const specPath of specFiles) {
+    const doc = readJson(specPath);
+    referenceId = getAuthReferenceId(doc);
+    if (referenceId) break;
+  }
 
   if (!referenceId) {
-    console.error("No x-ai-auth-reference-id found in OpenAPI securitySchemes.");
-    process.exitCode = 1;
+    console.log("No x-ai-auth-reference-id found in any OpenAPI spec – no patch needed.");
     return;
   }
 

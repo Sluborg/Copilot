@@ -41,6 +41,11 @@ provision:
     with:
       args: run patch:plugin-auth
 
+  - uses: cli/runNpmCommand
+    name: Patch agent greeting version
+    with:
+      args: run patch:agent-version
+
   # Build app package with latest env value
   - uses: teamsApp/zipAppPackage
     with:

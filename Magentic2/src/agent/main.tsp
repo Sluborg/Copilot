@@ -1,7 +1,8 @@
 import "@typespec/http";
 import "@typespec/openapi3";
 import "@microsoft/typespec-m365-copilot";
-import "./actions/teamsMessage.tsp";
+import "./actions/github.tsp";
+import "./actions/activeWrite.tsp";
 import "./prompts/instructions.tsp";
 import "./env.tsp";
 
@@ -20,5 +21,6 @@ using TypeSpec.M365.Copilot.Agents;
 // })
 namespace Magentic2 {  
   // Include custom actions in the agent
-  op sendTeamsMessage is global.TeamsAPI.sendTeamsMessage;
+  op searchIssues is global.GitHubAPI.searchIssues;
+  op createTask is global.ActiveWriteAPI.createTask;
 }
