@@ -1,34 +1,36 @@
 import "@typespec/http";
 import "@microsoft/typespec-m365-copilot";
+import "../env.tsp";
 
 using TypeSpec.Http;
 using TypeSpec.M365.Copilot.Actions;
 
 @service
-@server("https://jsonplaceholder.typicode.com")
-@actions(ActiveWriteAPI.ACTIONS_METADATA)
-namespace ActiveWriteAPI {
+@server(Environment.GAS_WEBHOOK_URL)
+@actions(GitHubWriteAPI.ACTIONS_METADATA)
+namespace GitHubWriteAPI {
   /**
-   * Metadata for active write API actions.
+   * Metadata for GitHub write actions via GAS proxy.
    */
   const ACTIONS_METADATA = #{
-    nameForHuman: "Active Write",
-    descriptionForHuman: "Create a task-like record through a write API call.",
-    descriptionForModel: "Perform an active write operation by creating a new task-like record via HTTP POST.",
-    legalInfoUrl: "https://jsonplaceholder.typicode.com/guide/",
-    privacyPolicyUrl: "https://jsonplaceholder.typicode.com/"
+    nameForHuman: "GitHub Issues",
+    descriptionForHuman: "Create a real GitHub issue in any of your repositories.",
+    descriptionForModel: "Create a real GitHub issue by posting to a proxy. Requires repo (owner/repo), title, and optional body.",
+    legalInfoUrl: "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+    privacyPolicyUrl: "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
   };
 
-  model CreateTaskRequest {
+  model CreateIssueRequest {
+    action: string = "createIssue";
+    repo: string;
     title: string;
-    body: string;
-    userId: integer = 1;
+    body?: string;
   }
 
   /**
-   * Create a new task-like record using a POST write operation.
+   * Create a real GitHub issue via the GAS proxy endpoint.
    */
-  @route("/posts")
+  @route("/")
   @post
-  op createTask(@body payload: CreateTaskRequest): string;
+  op createGitHubIssue(@body payload: CreateIssueRequest): string;
 }

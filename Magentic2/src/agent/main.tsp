@@ -22,5 +22,5 @@ using TypeSpec.M365.Copilot.Agents;
 namespace Magentic2 {  
   // Include custom actions in the agent
   op searchIssues is global.GitHubAPI.searchIssues;
-  op createTask is global.ActiveWriteAPI.createTask;
+  op createGitHubIssue is global.GitHubWriteAPI.createGitHubIssue;
 }
