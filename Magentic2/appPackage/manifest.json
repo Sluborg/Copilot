@@ -1,13 +1,13 @@
 {
     "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.25/MicrosoftTeams.schema.json",
     "manifestVersion": "1.25",
-    "version": "1.0.0",
+    "version": "2.1.45",
     "id": "${{TEAMS_APP_ID}}",
     "developer": {
-        "name": "My App, Inc.",
-        "websiteUrl": "https://www.example.com",
-        "privacyUrl": "https://www.example.com/privacy",
-        "termsOfUseUrl": "https://www.example.com/termofuse"
+        "name": "Stefan Lunneborg",
+        "websiteUrl": "https://www.lunneborg.se",
+        "privacyUrl": "https://www.lunneborg.se/privacy",
+        "termsOfUseUrl": "https://www.lunneborg.se/terms"
     },
     "icons": {
         "color": "color.png",
@@ -15,11 +15,11 @@
     },
     "name": {
         "short": "Magentic2${{APP_NAME_SUFFIX}}",
-        "full": "Full name for Magentic2"
+        "full": "Magentic2 Agent for Microsoft 365 Copilot"
     },
     "description": {
-        "short": "Short description for Magentic2",
-        "full": "Full description for Magentic2"
+        "short": "Self-improving Copilot agent with Power Automate integration.",
+        "full": "Magentic2 is a Microsoft 365 Copilot agent created by Stefan Lunneborg. It features dynamic memory, Power Automate actions, and advanced logging for self-improvement."
     },
     "accentColor": "#FFFFFF",
     "supportsChannelFeatures": "tier1",
