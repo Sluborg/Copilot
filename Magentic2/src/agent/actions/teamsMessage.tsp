@@ -19,6 +19,19 @@ model GraphOAuth2Auth is OAuth2Auth<
 @actions(TeamsAPI.ACTIONS_METADATA)
 @useAuth(GraphOAuth2Auth)
 namespace TeamsAPI {
+  model ItemBody {
+    @doc("The message format.")
+    contentType: "text" | "html";
+
+    @doc("The message content.")
+    content: string;
+  }
+
+  model SendChatMessageRequest {
+    @doc("Message body payload required by Microsoft Graph.")
+    body: ItemBody;
+  }
+
   /**
    * Metadata for the Microsoft Teams API actions.
    */
@@ -31,15 +44,23 @@ namespace TeamsAPI {
   };
 
   /**
-   * Send a message to a user in Microsoft Teams.
-   * @param userId The ID or email of the user to send the message to.
-   * @param payload The content of the message to send.
+   * List the current user's chats so a chat id can be selected before sending.
+   * @param top Maximum chats to return.
    */
-  @route("/chats")
+  @route("/me/chats")
+  @get
+  op listMyChats(@query top: integer = 20): string;
+
+  /**
+   * Send a message to an existing chat in Microsoft Teams.
+   * @param chatId The target chat id.
+   * @param payload The Microsoft Graph chat message request payload.
+   */
+  @route("/chats/{chatId}/messages")
   @post
   op sendTeamsMessage(
-    @query userId: string,
-    @body payload: string
+    @path chatId: string,
+    @body payload: SendChatMessageRequest
   ): string;
 }
 
