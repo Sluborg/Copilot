@@ -4,6 +4,7 @@
   "scripts": {
     "compile": "tsp compile ./src/agent/main.tsp --config ./tspconfig.yaml",
     "generate:env": "node scripts/generate-env.js",
+    "patch:pa-spec": "node scripts/patch-pa-spec.js",
     "patch:plugin-auth": "node scripts/patch-plugin-auth.js",
     "patch:agent-version": "node scripts/patch-agent-version.js"
   },

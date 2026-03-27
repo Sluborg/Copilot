@@ -5,7 +5,7 @@ import "./actions/github.tsp";
 import "./actions/activeWrite.tsp";
 import "./prompts/instructions.tsp";
 import "./env.tsp";
-import "./actions/teamsMessage.tsp";
+import "./actions/invokePAFlow.tsp";
 
 using TypeSpec.M365.Copilot.Agents;
 
@@ -24,5 +24,5 @@ namespace Magentic2 {
   // Include custom actions in the agent
   op searchIssues is global.GitHubAPI.searchIssues;
   op createGitHubIssue is global.GitHubWriteAPI.createGitHubIssue;
-  op sendTeamsMessage is TeamsMessageAPI.sendTeamsMessage;
+  op invokePAFlow is PAFlowAPI.invokePAFlow;
 }
