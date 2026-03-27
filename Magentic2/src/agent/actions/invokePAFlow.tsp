@@ -34,10 +34,14 @@ namespace PAFlowAPI {
     text: string;
   }
 
+  model PAFlowResponse {
+    status: string;
+    message: string;
+  }
+
   @route("/powerautomate/automations/direct/workflows/30c2f0f47bec43cc9342181e0662db57/triggers/manual/paths/invoke")
   @post
   op invokePAFlow(
-    @query("api-version") apiVersion: string = "1",
     @body payload: PAFlowRequest
-  ): string;
+  ): PAFlowResponse;
 }

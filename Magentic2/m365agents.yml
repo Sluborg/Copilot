@@ -42,6 +42,11 @@ provision:
       typeSpecConfigPath: ./tspconfig.yaml
 
   - uses: cli/runNpmCommand
+    name: Patch PA spec — inject fixed api-version query param
+    with:
+      args: run patch:pa-spec
+
+  - uses: cli/runNpmCommand
     name: Patch API plugin auth
     with:
       args: run patch:plugin-auth
@@ -101,6 +106,11 @@ publish:
       manifestPath: ./appPackage/manifest.json
       outputDir: ./appPackage/.generated
       typeSpecConfigPath: ./tspconfig.yaml
+
+  - uses: cli/runNpmCommand
+    name: Patch PA spec — inject fixed api-version query param
+    with:
+      args: run patch:pa-spec
 
   - uses: cli/runNpmCommand
     name: Patch API plugin auth
