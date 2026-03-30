@@ -1,5 +1,0 @@
-npm run compile
-npm run patch:pa-spec
-npm run patch:plugin-auth
-npm run patch:agent-version
-atk provision --env dev

@@ -1,0 +1,193 @@
+ÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  0% \ [0/11] Provision: starting.
+[0JExecuting provision 
+
+Lifecycle stage: provision(11 step(s) in total). The following actions will be executed: 
+(1/11) Action teamsApp/create: create app.
+(2/11) Action cli/runNpmCommand(install dependencies): running npm command.
+(3/11) Action cli/runNpmCommand(Generate TypeSpec environment variables): running npm command.
+(4/11) Action typeSpec/compile
+(5/11) Action cli/runNpmCommand(Patch PA spec ÔÇö inject fixed api-version query param): running npm command.
+(6/11) Action cli/runNpmCommand(Patch API plugin auth): running npm command.
+(7/11) Action cli/runNpmCommand(Patch agent greeting version): running npm command.
+(8/11) Action teamsApp/zipAppPackage: build app package.
+(9/11) Action teamsApp/validateAppPackage: validate app.
+(10/11) Action teamsApp/update: update app.
+(11/11) Action teamsApp/extendToM365: acquire Microsoft 365 title with the app package
+
+ÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  0% \ [0/11] Provision: starting.
+[0JExecuting lifecycle provision
+ÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  0% \ [0/11] Provision: starting.
+[0JExecuting task: npm install --progress=false
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  45% | [2/11] Provision: Run command npm install --progress=false at C:\Dev\Copilot\Magentic2\
+[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  45% | [2/11] Provision: Run command npm install --progress=false at C:\Dev\Copilot\Magentic2\
+[0J
+up to date, audited 187 packages in 5s
+
+32 packages are looking for funding
+  run `npm fund` for details
+
+4 vulnerabilities (2 moderate, 1 high, 1 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues, run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+Executing task: npm run generate:env -- dev
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  45% \ [3/11] Provision: Run command npm run generate:env -- dev at C:\Dev\Copilot\Magentic2\
+[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  45% / [3/11] Provision: Run command npm run generate:env -- dev at C:\Dev\Copilot\Magentic2\
+[0J
+> magentic2@1.0.3.30a generate:env
+> node scripts/generate-env.js dev
+
+Generated: C:\Dev\Copilot\Magentic2\src\agent\env.tsp
+Executing action typeSpec/compile
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  45% - [4/11] Provision: Compiling and generating files...
+[0JExecuting task: npx --package=@typespec/compiler tsp compile ./src/agent/main.tsp --config ./tspconfig.yaml
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  45% - [4/11] Provision: Compiling and generating files...
+[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  45% - [4/11] Provision: Compiling and generating files...
+[0JTypeSpec compiler v1.5.0
+
+- Compiling...
+Ô£ö Compiling
+- Running @typespec/openapi3...
+Ô£ö @typespec/openapi3 153ms appPackage/.generated/specs/
+- Running @microsoft/typespec-m365-copilot...
+Ô£ö @microsoft/typespec-m365-copilot 22ms appPackage/.generated/
+
+Compilation completed successfully.
+
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  45% \ [4/11] Provision: Compiling and generating files...
+[0JAction typeSpec/compile executed successfully
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  45% | [4/11] Provision: Compiling and generating files...
+[0JExecuting task: npm run patch:pa-spec
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  45% | [5/11] Provision: Run command npm run patch:pa-spec at C:\Dev\Copilot\Magentic2\
+[0J
+> magentic2@1.0.3.30a patch:pa-spec
+> node scripts/patch-pa-spec.js
+
+PA spec patch complete ÔÇö 0 file(s) updated.
+Executing task: npm run patch:plugin-auth
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  47% / [6/11] Provision: Run command npm run patch:plugin-auth at C:\Dev\Copilot\Magentic2\
+[0J
+> magentic2@1.0.3.30a patch:plugin-auth
+> node scripts/patch-plugin-auth.js
+
+No x-ai-auth-reference-id found in any OpenAPI spec ÔÇô no patch needed.
+Executing task: npm run patch:agent-version
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆ  83% | [7/11] Provision: Run command npm run patch:agent-version at C:\Dev\Copilot\Magentic2\
+[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆ  83% | [7/11] Provision: Run command npm run patch:agent-version at C:\Dev\Copilot\Magentic2\
+[0J
+> magentic2@1.0.3.30a patch:agent-version
+> node scripts/patch-agent-version.js
+
+Incremented version: 1.263.1 -> 1.263.2
+Updated manifest.json version to: 1.263.2
+Version.md is set to: 1.263.2
+Instructions string contains the {{version}} placeholder.
+(ÔêÜ)Done: App Package C:\Dev\Copilot\Magentic2\appPackage\build\appPackage.dev.zip built successfully!
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆ  83% - [8/11] Provision: Building app package...
+[0JMicrosoft 365 Agents Toolkit has checked against all validation rules:
+
+Summary: 
+57 passed.
+(ÔêÜ) Done: The product ID in the manifest has a valid prefix
+(ÔêÜ) Done: The structure of the product ID is correct.
+(ÔêÜ) Done: Package of your add-in was parsed successfully.
+(ÔêÜ) Done: Your package matches the submission type.
+(ÔêÜ) Done: Manifest version is not missing and follows the guideline.
+(ÔêÜ) Done: Schema URL is present.
+(ÔêÜ) Done: Manifest Version and Schema version are the same
+(ÔêÜ) Done: Checking the existence of "id".
+(ÔêÜ) Done: Field 'id' is a Guid in the manifest.
+(ÔêÜ) Done: PackageName is not defined on manifest with version greater than 1.16.
+(ÔêÜ) Done: App version should not start with '0'.
+(ÔêÜ) Done: App version should contain only numbers separated by dots.
+(ÔêÜ) Done: Short name is not missing in the manifest
+(ÔêÜ) Done: Short name has the correct length
+(ÔêÜ) Done: Short name doesn't contain "Microsoft" or any of the "Microsoft product" names
+(ÔêÜ) Done: Short name doesn't contain beta environment keywords
+(ÔêÜ) Done: Short name is not reserved name.
+(ÔêÜ) Done: Short description is not missing
+(ÔêÜ) Done: Short description has the corrected length
+(ÔêÜ) Done: Short description doesn't contain copyrighted brand names
+(ÔêÜ) Done: Full description has the corrected length
+(ÔêÜ) Done: Full description doesn't contain copyrighted brand
+(ÔêÜ) Done: Full description does not repeat the same lines in short description
+(ÔêÜ) Done: Required field 'developer name' is missing in the manifest.
+(ÔêÜ) Done: Developer name has the correct length.
+(ÔêÜ) Done: Developer name is valid.
+(ÔêÜ) Done: Website URL is not missing in the manifest.
+(ÔêÜ) Done: Website URL has the correct length.
+(ÔêÜ) Done: Website URL is secure
+(ÔêÜ) Done: Website URL is valid and follows the guideline
+(ÔêÜ) Done: Privacy URL is not missing in the manifest.
+(ÔêÜ) Done: Privacy URL has the correct length
+(ÔêÜ) Done: Privacy URL is secure
+(ÔêÜ) Done: Privacy URL must not be hosted in the different domain as compared with Company/Website URL
+(ÔêÜ) Done: Privacy URL does not point to Beta environment
+(ÔêÜ) Done: Terms of use URL is not missing
+(ÔêÜ) Done: Terms of use URL has the correct length
+(ÔêÜ) Done: Term of use URL is secure
+(ÔêÜ) Done: Term of use URL does not point to Beta environment
+(ÔêÜ) Done: Term of use URL must not be hosted in the different domain as compared with Company/Website URL
+(ÔêÜ) Done: MPNID length cannot be more than 10 symbols
+(ÔêÜ) Done: Valid domains don't contain tunneling site
+(ÔêÜ) Done: Valid domains don't contain hosting site with a wildcard
+(ÔêÜ) Done: Provided image file size is valid.
+(ÔêÜ) Done: Large icon should be 192x192 with no transparency. Image icons are as per guidelines
+(ÔêÜ) Done: Provided image file size is valid.
+(ÔêÜ) Done: Small icon has the correct size (32x32)
+(ÔêÜ) Done: Small icon is only white and transparent (no other colors)
+(ÔêÜ) Done: "webApplicationInfo" allows an app developer to specify their AAD App ID and Graph information to help users seamlessly sign into their AAD app. Id: AAD application id of the app. This id must be a GUID. Resource: Resource URL of app for acquiring auth token for SSO
+(ÔêÜ) Done: The permission list are as per the RSC requirement.
+(ÔêÜ) Done: StaticTabs are in personal scope
+(ÔêÜ) Done: Manifest should not contain reserved Activity Type 'systemDefault'.
+(ÔêÜ) Done: Manifest should not contain duplicate Activity Type.
+(ÔêÜ) Done: Manifest should not contain Activity Icons when Activity Types is missing.
+(ÔêÜ) Done: Manifest should not contain duplicate Icon id in Activity Icons
+(ÔêÜ) Done: Acceptance test service has finished checking provided add-in.
+
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆ  83% \ [9/11] Provision: Validating app package...
+[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆ  85% / [10/11] Provision: Updating app...
+[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% - [11/11] Provision: Acquiring Microsoft 365 title with the app package...
+[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% \ [11/11] Provision: Acquiring Microsoft 365 title with the app package...
+[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% | [11/11] Provision: Acquiring Microsoft 365 title with the app package...
+[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% / [11/11] Provision: Acquiring Microsoft 365 title with the app package...
+[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% - [11/11] Provision: Acquiring Microsoft 365 title with the app package...
+[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% \ [11/11] Provision: Acquiring Microsoft 365 title with the app package...
+[0JTitleId: T_18b6df27-aeff-bd98-5bab-b5e1f6398bfa
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% | [11/11] Provision: Acquiring Microsoft 365 title with the app package...
+[0JAppId: 5128ec43-85d3-4e18-8b0c-ae21d3dba7c5
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% | [11/11] Provision: Acquiring Microsoft 365 title with the app package...
+[0JFinished Executing lifecycle provision. Result: {"TEAMS_APP_ID":"1835c71d-389a-47da-99bc-59d5c7fd9a40","TEAMS_APP_TENANT_ID":"a19f121d-81e1-4858-a9d8-736e267fd4c7","TEAMS_APP_UPDATE_TIME":"2026-03-30T14:32:03.5823984+00:00","M365_TITLE_ID":"T_18b6df27-aeff-bd98-5bab-b5e1f6398bfa","M365_APP_ID":"5128ec43-85d3-4e18-8b0c-ae21d3dba7c5","SHARE_LINK":""}
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% | [11/11] Provision: Acquiring Microsoft 365 title with the app package...
+[0JExecution summary:
+
+Summary:
+(ÔêÜ) Done: Lifecycle stage provision was executed successfully.
+  (ÔêÜ) Done: teamsApp/create executed successfully.
+    (ÔêÜ) Done: App with id 1835c71d-389a-47da-99bc-59d5c7fd9a40 already exists, skipped creating a new app.
+  (ÔêÜ) Done: cli/runNpmCommand(install dependencies) executed successfully.
+    (ÔêÜ) Done: `npm install --progress=false` command executed at `C:\Dev\Copilot\Magentic2\`.
+  (ÔêÜ) Done: cli/runNpmCommand(Generate TypeSpec environment variables) executed successfully.
+    (ÔêÜ) Done: `npm run generate:env -- dev` command executed at `C:\Dev\Copilot\Magentic2\`.
+  (ÔêÜ) Done: typeSpec/compile executed successfully.
+  (ÔêÜ) Done: cli/runNpmCommand(Patch PA spec ÔÇö inject fixed api-version query param) executed successfully.
+    (ÔêÜ) Done: `npm run patch:pa-spec` command executed at `C:\Dev\Copilot\Magentic2\`.
+  (ÔêÜ) Done: cli/runNpmCommand(Patch API plugin auth) executed successfully.
+    (ÔêÜ) Done: `npm run patch:plugin-auth` command executed at `C:\Dev\Copilot\Magentic2\`.
+  (ÔêÜ) Done: cli/runNpmCommand(Patch agent greeting version) executed successfully.
+    (ÔêÜ) Done: `npm run patch:agent-version` command executed at `C:\Dev\Copilot\Magentic2\`.
+  (ÔêÜ) Done: teamsApp/zipAppPackage executed successfully.
+  (ÔêÜ) Done: teamsApp/validateAppPackage executed successfully.
+  (ÔêÜ) Done: teamsApp/update executed successfully.
+    (ÔêÜ) Done: app 1835c71d-389a-47da-99bc-59d5c7fd9a40 updated successfully
+  (ÔêÜ) Done: teamsApp/extendToM365 executed successfully.
+    (ÔêÜ) Done: Microsoft 365 title acquired successfully (T_18b6df27-aeff-bd98-5bab-b5e1f6398bfa).
+
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% | [11/11] Provision: Acquiring Microsoft 365 title with the app package...
+[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% | [11/11] Provision  (ÔêÜ) Done.
+11/11 actions in provision stage executed successfully.

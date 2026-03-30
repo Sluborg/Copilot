@@ -51,6 +51,12 @@ provision:
     with:
       args: run patch:plugin-auth
 
+
+  - uses: cli/runNpmCommand
+    name: Remove PA flow adaptive card
+    with:
+      args: run patch:pa-remove-card
+
   - uses: cli/runNpmCommand
     name: Patch agent greeting version
     with:

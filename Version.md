@@ -1,6 +1,6 @@
-1.0.330.9
-# Versioning scheme: 1.0.MDD.incremental (no leading zero for month)
+1.263.3
+# Versioning scheme: 1.303.incremental (year.month.incremental)
 # Examples:
-#   1.0.330.1   (first patch on March 30)
-#   1.0.330.2   (second patch on March 30)
-#   1.0.1204.1  (first patch on Dec 4)
+#   1.303.1   (first patch March 2026)
+#   1.303.2   (second patch March 2026)
+#   1.304.1   (first patch April 2026)

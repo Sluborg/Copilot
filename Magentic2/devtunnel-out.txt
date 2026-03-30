@@ -1,0 +1,5 @@
+Hosting port: 3001
+Connect via browser: https://7jk0tz5f.euw.devtunnels.ms:3001, https://7jk0tz5f-3001.euw.devtunnels.ms
+Inspect network activity: https://7jk0tz5f-3001-inspect.euw.devtunnels.ms
+
+Ready to accept connections for tunnel: tidy-lake-1z16x2f.euw
