@@ -1,6 +1,6 @@
 {
   "name": "magentic2",
-  "version": "1.0.0",
+  "version": "1.0.3.30a",
   "scripts": {
     "compile": "tsp compile ./src/agent/main.tsp --config ./tspconfig.yaml",
     "generate:env": "node scripts/generate-env.js",

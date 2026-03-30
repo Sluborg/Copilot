@@ -42,21 +42,18 @@ function writeJson(filePath, value) {
   }
 
   const da = readJson(daPath);
-  const greeting = `Magentic2 version ${versionValue}`;
-
   if (typeof da.instructions !== "string") {
     console.error("declarativeAgent.json has no instructions string.");
     process.exitCode = 1;
     return;
   }
 
-  const phraseRegex = /Greeting phrase:\s*"[^"]*"/;
-  if (phraseRegex.test(da.instructions)) {
-    da.instructions = da.instructions.replace(phraseRegex, `Greeting phrase: "${greeting}"`);
-  } else {
-    da.instructions = `Greeting phrase: "${greeting}" ` + da.instructions;
+  if (!da.instructions.includes("{{version}}")) {
+    console.error("Warning: The instructions string does not contain the {{version}} placeholder.");
+    process.exitCode = 1;
+    return;
   }
 
-  writeJson(daPath, da);
-  console.log(`Patched declarativeAgent greeting to: ${greeting}`);
+  console.log(`Version.md is set to: ${versionValue}`);
+  console.log("Instructions string contains the {{version}} placeholder.");
 })();
