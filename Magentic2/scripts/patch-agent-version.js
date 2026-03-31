@@ -22,6 +22,7 @@ function writeJson(filePath, value) {
   const versionPath = path.join(repoRoot, "Version.md");
   const daPath = path.join(magenticRoot, "appPackage", ".generated", "declarativeAgent.json");
   const pkgPath = path.join(magenticRoot, "package.json");
+  const manifestPath = path.join(magenticRoot, "appPackage", "manifest.json");
 
   if (!fs.existsSync(versionPath)) {
     console.error("Missing version source:", versionPath);
@@ -29,13 +30,29 @@ function writeJson(filePath, value) {
     return;
   }
 
-  const versionValue = readText(versionPath).trim();
-  if (!versionValue) {
-    console.error("Version.md is empty.");
+  // Read first non-comment, non-empty line as version
+  const raw = readText(versionPath);
+  const versionLine = raw.split(/\r?\n/).find(l => l.trim() && !l.trim().startsWith("#"));
+  if (!versionLine) {
+    console.error("No version found in Version.md.");
     process.exitCode = 1;
     return;
   }
 
+  const current = versionLine.trim();
+  const parts = current.split(".");
+  if (parts.length !== 3 || parts.some(p => isNaN(parseInt(p)))) {
+    console.error(`Invalid version format in Version.md: ${current}. Expected x.y.z`);
+    process.exitCode = 1;
+    return;
+  }
+
+  // Auto-increment patch segment
+  const newVersion = `${parts[0]}.${parts[1]}.${parseInt(parts[2]) + 1}`;
+  fs.writeFileSync(versionPath, raw.replace(current, newVersion), "utf8");
+  console.log(`Auto-incremented version: ${current} → ${newVersion}`);
+
+  // Patch declarativeAgent.json (valid JSON, safe to parse)
   if (!fs.existsSync(daPath)) {
     console.error("Missing generated declarative agent:", daPath);
     process.exitCode = 1;
@@ -50,19 +67,26 @@ function writeJson(filePath, value) {
   }
 
   if (da.instructions.includes("{{version}}")) {
-    da.instructions = da.instructions.replace(/\{\{version\}\}/g, versionValue);
+    da.instructions = da.instructions.replace(/\{\{version\}\}/g, newVersion);
     writeJson(daPath, da);
-    console.log(`Patched declarativeAgent.json: {{version}} → ${versionValue}`);
+    console.log(`Patched declarativeAgent.json: {{version}} → ${newVersion}`);
   } else {
     console.warn("Warning: {{version}} placeholder not found in instructions.");
   }
 
+  // Patch package.json (valid JSON, safe to parse)
   if (fs.existsSync(pkgPath)) {
     const pkg = readJson(pkgPath);
-    if (pkg.version !== versionValue) {
-      pkg.version = versionValue;
-      writeJson(pkgPath, pkg);
-      console.log(`Patched package.json: version → ${versionValue}`);
-    }
+    pkg.version = newVersion;
+    writeJson(pkgPath, pkg);
+    console.log(`Patched package.json: version → ${newVersion}`);
+  }
+
+  // Patch manifest.json as TEXT — contains ${{TOKEN}} placeholders, not valid JSON
+  if (fs.existsSync(manifestPath)) {
+    const manifestText = readText(manifestPath);
+    const patched = manifestText.replace(/"version"\s*:\s*"[^"]*"/, `"version": "${newVersion}"`);
+    fs.writeFileSync(manifestPath, patched, "utf8");
+    console.log(`Patched manifest.json: version → ${newVersion}`);
   }
 })();

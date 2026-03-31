@@ -13,11 +13,11 @@ devtunnel host -p 3001 --allow-anonymous
 $id = (devtunnel list 2>&1 | Select-String '(\S+\.euw)\s+1').Matches[0].Groups[1].Value; $url = (devtunnel show $id 2>&1 | Select-String '(https://\S+\.devtunnels\.ms)').Matches[0].Groups[1].Value.TrimEnd('/'); (Get-Content C:\Dev\Copilot\Magentic2\env\.env.dev -Raw) -replace '(?m)^PA_APP_SERVER_URL=.*$', "PA_APP_SERVER_URL=$url" | Set-Content C:\Dev\Copilot\Magentic2\env\.env.dev -NoNewline; Write-Host "Patched .env.dev with $url — run deploy next" -ForegroundColor Green
 
 # 4. Deploy
+cd C:\Dev\Copilot\Magentic2
 npm run compile
 npm run patch:pa-spec
 npm run patch:plugin-auth
-npm run patch:pa-remove-card   
-npm run patch:agent-version    
+npm run patch:pa-remove-card    
 atk provision --env dev
 
 # Test relay (optional)
