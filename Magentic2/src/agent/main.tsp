@@ -1,8 +1,7 @@
 import "@typespec/http";
 import "@typespec/openapi3";
 import "@microsoft/typespec-m365-copilot";
-import "./actions/github.tsp";
-import "./actions/activeWrite.tsp";
+import "./actions/cinode.tsp";
 import "./prompts/instructions.tsp";
 import "./env.tsp";
 import "./actions/invokePAFlow.tsp";
@@ -22,8 +21,12 @@ using TypeSpec.M365.Copilot.Agents;
 // })
 namespace Magentic2 {  
   // Include custom actions in the agent
-  op searchIssues is global.GitHubAPI.searchIssues;
-  op createGitHubIssue is global.GitHubWriteAPI.createGitHubIssue;
+  op getUsers is CinodeAPI.getUsers;
+  op searchUsers is CinodeAPI.searchUsers;
+  op getAvailability is CinodeAPI.getAvailability;
+  op getProjects is CinodeAPI.getProjects;
+  op getProject is CinodeAPI.getProject;
+
   /** Send a text message to the Power Automate flow */
   op invokePAFlow is PAFlowAPI.invokePAFlow;
 }

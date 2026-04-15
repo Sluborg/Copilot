@@ -2,7 +2,7 @@
 /**
  * patch-pa-remove-card.js
  *
- * Removes adaptive card / response_semantics from the invokePAFlow function
+ * Removes adaptive card / fn.capabilities.response_semantics from the invokePAFlow function
  * in the generated plugin manifest. The PA flow returns a plain JSON object
  * and the default card template produces a useless placeholder card.
  */
@@ -22,8 +22,8 @@ function writeJson(filePath, value) {
   const generatedDir = path.resolve(__dirname, "..", "appPackage", ".generated");
 
   const pluginFiles = fs
-    .readdirSync(generatedDir)
-    .filter((name) => name.endsWith("-apiplugin.json"));
+  .readdirSync(generatedDir)
+  .filter((name) => name.endsWith("-apiplugin.json") && !name.toLowerCase().includes("cinode"));
 
   if (pluginFiles.length === 0) {
     console.log("No plugin manifests found — skipping PA card removal.");
@@ -40,8 +40,8 @@ function writeJson(filePath, value) {
     let changed = false;
     for (const fn of functions) {
       if (fn.name === "invokePAFlow") {
-        if (fn.response_semantics) {
-          delete fn.response_semantics;
+        if (fn.capabilities?.response_semantics) {
+          delete fn.capabilities.response_semantics;
           changed = true;
         }
       }

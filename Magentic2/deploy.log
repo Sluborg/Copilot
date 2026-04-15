@@ -1,27 +1,28 @@
-ÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  0% \ [0/11] Provision: starting.
+ÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  0% | [0/12] Provision: starting.
 [0JExecuting provision 
 
-Lifecycle stage: provision(11 step(s) in total). The following actions will be executed: 
-(1/11) Action teamsApp/create: create app.
-(2/11) Action cli/runNpmCommand(install dependencies): running npm command.
-(3/11) Action cli/runNpmCommand(Generate TypeSpec environment variables): running npm command.
-(4/11) Action typeSpec/compile
-(5/11) Action cli/runNpmCommand(Patch PA spec ÔÇö inject fixed api-version query param): running npm command.
-(6/11) Action cli/runNpmCommand(Patch API plugin auth): running npm command.
-(7/11) Action cli/runNpmCommand(Patch agent greeting version): running npm command.
-(8/11) Action teamsApp/zipAppPackage: build app package.
-(9/11) Action teamsApp/validateAppPackage: validate app.
-(10/11) Action teamsApp/update: update app.
-(11/11) Action teamsApp/extendToM365: acquire Microsoft 365 title with the app package
+Lifecycle stage: provision(12 step(s) in total). The following actions will be executed: 
+(1/12) Action teamsApp/create: create app.
+(2/12) Action cli/runNpmCommand(install dependencies): running npm command.
+(3/12) Action cli/runNpmCommand(Generate TypeSpec environment variables): running npm command.
+(4/12) Action typeSpec/compile
+(5/12) Action cli/runNpmCommand(Patch PA spec ÔÇö inject fixed api-version query param): running npm command.
+(6/12) Action cli/runNpmCommand(Patch API plugin auth): running npm command.
+(7/12) Action cli/runNpmCommand(Patch Cinode API key auth): running npm command.
+(8/12) Action cli/runNpmCommand(Remove PA flow adaptive card): running npm command.
+(9/12) Action cli/runNpmCommand(Patch agent greeting version): running npm command.
+(10/12) Action teamsApp/zipAppPackage: build app package.
+(11/12) Action teamsApp/validateAppPackage: validate app.
+(12/12) Action teamsApp/update: update app.
 
-ÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  0% \ [0/11] Provision: starting.
+ÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  0% | [0/12] Provision: starting.
 [0JExecuting lifecycle provision
-ÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  0% \ [0/11] Provision: starting.
+ÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  0% | [0/12] Provision: starting.
 [0JExecuting task: npm install --progress=false
-ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  45% | [2/11] Provision: Run command npm install --progress=false at C:\Dev\Copilot\Magentic2\
-[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  45% | [2/11] Provision: Run command npm install --progress=false at C:\Dev\Copilot\Magentic2\
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  42% / [2/12] Provision: Run command npm install --progress=false at C:\Dev\Copilot\Magentic2\
+[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  42% / [2/12] Provision: Run command npm install --progress=false at C:\Dev\Copilot\Magentic2\
 [0J
-up to date, audited 187 packages in 5s
+up to date, audited 187 packages in 4s
 
 32 packages are looking for funding
   run `npm fund` for details
@@ -36,59 +37,75 @@ To address all issues, run:
 
 Run `npm audit` for details.
 Executing task: npm run generate:env -- dev
-ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  45% \ [3/11] Provision: Run command npm run generate:env -- dev at C:\Dev\Copilot\Magentic2\
-[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  45% / [3/11] Provision: Run command npm run generate:env -- dev at C:\Dev\Copilot\Magentic2\
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  42% - [3/12] Provision: Run command npm run generate:env -- dev at C:\Dev\Copilot\Magentic2\
 [0J
-> magentic2@1.0.3.30a generate:env
+> magentic2@1.415.5 generate:env
 > node scripts/generate-env.js dev
 
 Generated: C:\Dev\Copilot\Magentic2\src\agent\env.tsp
 Executing action typeSpec/compile
-ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  45% - [4/11] Provision: Compiling and generating files...
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  42% | [4/12] Provision: Compiling and generating files...
 [0JExecuting task: npx --package=@typespec/compiler tsp compile ./src/agent/main.tsp --config ./tspconfig.yaml
-ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  45% - [4/11] Provision: Compiling and generating files...
-[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  45% - [4/11] Provision: Compiling and generating files...
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  42% | [4/12] Provision: Compiling and generating files...
+[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  42% - [4/12] Provision: Compiling and generating files...
 [0JTypeSpec compiler v1.5.0
 
 - Compiling...
 Ô£ö Compiling
 - Running @typespec/openapi3...
-Ô£ö @typespec/openapi3 153ms appPackage/.generated/specs/
+Ô£ö @typespec/openapi3 33ms appPackage/.generated/specs/
 - Running @microsoft/typespec-m365-copilot...
-Ô£ö @microsoft/typespec-m365-copilot 22ms appPackage/.generated/
+Ô£ö @microsoft/typespec-m365-copilot 7ms appPackage/.generated/
 
 Compilation completed successfully.
 
-ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  45% \ [4/11] Provision: Compiling and generating files...
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  42% \ [4/12] Provision: Compiling and generating files...
 [0JAction typeSpec/compile executed successfully
-ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  45% | [4/11] Provision: Compiling and generating files...
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  42% | [4/12] Provision: Compiling and generating files...
 [0JExecuting task: npm run patch:pa-spec
-ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  45% | [5/11] Provision: Run command npm run patch:pa-spec at C:\Dev\Copilot\Magentic2\
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  42% | [5/12] Provision: Run command npm run patch:pa-spec at C:\Dev\Copilot\Magentic2\
 [0J
-> magentic2@1.0.3.30a patch:pa-spec
+> magentic2@1.415.5 patch:pa-spec
 > node scripts/patch-pa-spec.js
 
 PA spec patch complete ÔÇö 0 file(s) updated.
 Executing task: npm run patch:plugin-auth
-ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  47% / [6/11] Provision: Run command npm run patch:plugin-auth at C:\Dev\Copilot\Magentic2\
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  47% / [6/12] Provision: Run command npm run patch:plugin-auth at C:\Dev\Copilot\Magentic2\
 [0J
-> magentic2@1.0.3.30a patch:plugin-auth
+> magentic2@1.415.5 patch:plugin-auth
 > node scripts/patch-plugin-auth.js
 
 No x-ai-auth-reference-id found in any OpenAPI spec ÔÇô no patch needed.
-Executing task: npm run patch:agent-version
-ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆ  83% | [7/11] Provision: Run command npm run patch:agent-version at C:\Dev\Copilot\Magentic2\
-[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆ  83% | [7/11] Provision: Run command npm run patch:agent-version at C:\Dev\Copilot\Magentic2\
+Executing task: npm run patch:cinode-auth
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  63% - [7/12] Provision: Run command npm run patch:cinode-auth at C:\Dev\Copilot\Magentic2\
 [0J
-> magentic2@1.0.3.30a patch:agent-version
+> magentic2@1.415.5 patch:cinode-auth
+> node scripts/patch-cinode-auth.js dev
+
+Patched Cinode plugin manifest with ApiKeyPluginVault (17238204-fbf4-43cd-82bf-a9e81ec3306d).
+Executing task: npm run patch:pa-remove-card
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆÔûÆ  64% \ [8/12] Provision: Run command npm run patch:pa-remove-card at C:\Dev\Copilot\Magentic2\
+[0J
+> magentic2@1.415.5 patch:pa-remove-card
+> node scripts/patch-pa-remove-card.js
+
+Removed adaptive card from invokePAFlow in: paflowapi-apiplugin.json
+PA card removal complete ÔÇö 1 file(s) updated.
+Executing task: npm run patch:agent-version
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆ  78% | [9/12] Provision: Run command npm run patch:agent-version at C:\Dev\Copilot\Magentic2\
+[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆ  78% | [9/12] Provision: Run command npm run patch:agent-version at C:\Dev\Copilot\Magentic2\
+[0J
+> magentic2@1.415.5 patch:agent-version
 > node scripts/patch-agent-version.js
 
-Incremented version: 1.263.1 -> 1.263.2
-Updated manifest.json version to: 1.263.2
-Version.md is set to: 1.263.2
-Instructions string contains the {{version}} placeholder.
+Computed version: 1.415.5 ÔåÆ 1.415.6
+Patched declarativeAgent.json: {{version}} ÔåÆ 1.415.6
+Patched declarativeAgent.json: description release stamp updated.
+Patched package.json: version ÔåÆ 1.415.6
+Patched package-lock.json: version ÔåÆ 1.415.6
+Patched manifest.json: version ÔåÆ 1.415.6, description release stamp updated.
 (ÔêÜ)Done: App Package C:\Dev\Copilot\Magentic2\appPackage\build\appPackage.dev.zip built successfully!
-ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆ  83% - [8/11] Provision: Building app package...
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆÔûÆ  79% / [10/12] Provision: Building app package...
 [0JMicrosoft 365 Agents Toolkit has checked against all validation rules:
 
 Summary: 
@@ -150,20 +167,10 @@ Summary:
 (ÔêÜ) Done: Manifest should not contain duplicate Icon id in Activity Icons
 (ÔêÜ) Done: Acceptance test service has finished checking provided add-in.
 
-ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆ  83% \ [9/11] Provision: Validating app package...
-[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûÆÔûÆÔûÆ  85% / [10/11] Provision: Updating app...
-[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% - [11/11] Provision: Acquiring Microsoft 365 title with the app package...
-[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% \ [11/11] Provision: Acquiring Microsoft 365 title with the app package...
-[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% | [11/11] Provision: Acquiring Microsoft 365 title with the app package...
-[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% / [11/11] Provision: Acquiring Microsoft 365 title with the app package...
-[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% - [11/11] Provision: Acquiring Microsoft 365 title with the app package...
-[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% \ [11/11] Provision: Acquiring Microsoft 365 title with the app package...
-[0JTitleId: T_18b6df27-aeff-bd98-5bab-b5e1f6398bfa
-ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% | [11/11] Provision: Acquiring Microsoft 365 title with the app package...
-[0JAppId: 5128ec43-85d3-4e18-8b0c-ae21d3dba7c5
-ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% | [11/11] Provision: Acquiring Microsoft 365 title with the app package...
-[0JFinished Executing lifecycle provision. Result: {"TEAMS_APP_ID":"1835c71d-389a-47da-99bc-59d5c7fd9a40","TEAMS_APP_TENANT_ID":"a19f121d-81e1-4858-a9d8-736e267fd4c7","TEAMS_APP_UPDATE_TIME":"2026-03-30T14:32:03.5823984+00:00","M365_TITLE_ID":"T_18b6df27-aeff-bd98-5bab-b5e1f6398bfa","M365_APP_ID":"5128ec43-85d3-4e18-8b0c-ae21d3dba7c5","SHARE_LINK":""}
-ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% | [11/11] Provision: Acquiring Microsoft 365 title with the app package...
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% - [11/12] Provision: Validating app package...
+[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% / [12/12] Provision: Updating app...
+[0JFinished Executing lifecycle provision. Result: {"TEAMS_APP_ID":"1835c71d-389a-47da-99bc-59d5c7fd9a40","TEAMS_APP_TENANT_ID":"a19f121d-81e1-4858-a9d8-736e267fd4c7","TEAMS_APP_UPDATE_TIME":"2026-04-15T09:51:55.154431+00:00"}
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% \ [12/12] Provision: Updating app...
 [0JExecution summary:
 
 Summary:
@@ -179,15 +186,17 @@ Summary:
     (ÔêÜ) Done: `npm run patch:pa-spec` command executed at `C:\Dev\Copilot\Magentic2\`.
   (ÔêÜ) Done: cli/runNpmCommand(Patch API plugin auth) executed successfully.
     (ÔêÜ) Done: `npm run patch:plugin-auth` command executed at `C:\Dev\Copilot\Magentic2\`.
+  (ÔêÜ) Done: cli/runNpmCommand(Patch Cinode API key auth) executed successfully.
+    (ÔêÜ) Done: `npm run patch:cinode-auth` command executed at `C:\Dev\Copilot\Magentic2\`.
+  (ÔêÜ) Done: cli/runNpmCommand(Remove PA flow adaptive card) executed successfully.
+    (ÔêÜ) Done: `npm run patch:pa-remove-card` command executed at `C:\Dev\Copilot\Magentic2\`.
   (ÔêÜ) Done: cli/runNpmCommand(Patch agent greeting version) executed successfully.
     (ÔêÜ) Done: `npm run patch:agent-version` command executed at `C:\Dev\Copilot\Magentic2\`.
   (ÔêÜ) Done: teamsApp/zipAppPackage executed successfully.
   (ÔêÜ) Done: teamsApp/validateAppPackage executed successfully.
   (ÔêÜ) Done: teamsApp/update executed successfully.
     (ÔêÜ) Done: app 1835c71d-389a-47da-99bc-59d5c7fd9a40 updated successfully
-  (ÔêÜ) Done: teamsApp/extendToM365 executed successfully.
-    (ÔêÜ) Done: Microsoft 365 title acquired successfully (T_18b6df27-aeff-bd98-5bab-b5e1f6398bfa).
 
-ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% | [11/11] Provision: Acquiring Microsoft 365 title with the app package...
-[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% | [11/11] Provision  (ÔêÜ) Done.
-11/11 actions in provision stage executed successfully.
+ÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% \ [12/12] Provision: Updating app...
+[0JÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûêÔûê  100% | [12/12] Provision  (ÔêÜ) Done.
+12/12 actions in provision stage executed successfully.

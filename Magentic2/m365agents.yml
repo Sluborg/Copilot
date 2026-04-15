@@ -51,6 +51,10 @@ provision:
     with:
       args: run patch:plugin-auth
 
+  - uses: cli/runNpmCommand
+    name: Patch Cinode API key auth
+    with:
+      args: run patch:cinode-auth
 
   - uses: cli/runNpmCommand
     name: Remove PA flow adaptive card
@@ -81,18 +85,6 @@ provision:
     with:
       # Relative path to this file. This is the path for built zip file.
       appPackagePath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip
-  # Extend your app to Outlook and the Microsoft 365 app
-  - uses: teamsApp/extendToM365
-    with:
-      # Relative path to the build app package.
-      appPackagePath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip
-      scope: ${{AGENT_SCOPE}}
-    # Write the information of created resources into environment file for
-    # the specified environment variable(s).
-    writeToEnvironmentFile:
-      titleId: M365_TITLE_ID
-      appId: M365_APP_ID
-      shareLink: SHARE_LINK
 
 # Triggered when 'teamsapp publish' is executed
 publish:
@@ -122,6 +114,16 @@ publish:
     name: Patch API plugin auth
     with:
       args: run patch:plugin-auth
+
+  - uses: cli/runNpmCommand
+    name: Patch Cinode API key auth
+    with:
+      args: run patch:cinode-auth
+
+  - uses: cli/runNpmCommand
+    name: Remove PA flow adaptive card
+    with:
+      args: run patch:pa-remove-card
 
   - uses: cli/runNpmCommand
     name: Patch agent greeting version
@@ -157,4 +159,70 @@ publish:
     # the specified environment variable(s).
     writeToEnvironmentFile:
       publishedAppId: TEAMS_APP_PUBLISHED_APP_ID
+
+deploy:
+  - uses: cli/runNpmCommand
+    name: install dependencies
+    with:
+      args: install --progress=false
+
+  - uses: cli/runNpmCommand
+    name: Generate TypeSpec environment variables
+    with:
+      args: run generate:env -- ${{TEAMSFX_ENV}}
+
+  - uses: typeSpec/compile
+    with:
+      path: ./src/agent/main.tsp
+      manifestPath: ./appPackage/manifest.json
+      outputDir: ./appPackage/.generated
+      typeSpecConfigPath: ./tspconfig.yaml
+
+  - uses: cli/runNpmCommand
+    name: Patch PA spec — inject fixed api-version query param
+    with:
+      args: run patch:pa-spec
+
+  - uses: cli/runNpmCommand
+    name: Patch API plugin auth
+    with:
+      args: run patch:plugin-auth
+
+  - uses: cli/runNpmCommand
+    name: Patch Cinode API key auth
+    with:
+      args: run patch:cinode-auth
+
+  - uses: cli/runNpmCommand
+    name: Remove PA flow adaptive card
+    with:
+      args: run patch:pa-remove-card
+
+  - uses: cli/runNpmCommand
+    name: Patch agent greeting version
+    with:
+      args: run patch:agent-version
+
+  - uses: teamsApp/zipAppPackage
+    with:
+      manifestPath: ./appPackage/manifest.json
+      outputZipPath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip
+      outputFolder: ./appPackage/build
+
+  - uses: teamsApp/validateAppPackage
+    with:
+      appPackagePath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip
+
+  - uses: teamsApp/update
+    with:
+      appPackagePath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip
+
+  - uses: teamsApp/extendToM365
+    with:
+      appPackagePath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip
+      scope: ${{AGENT_SCOPE}}
+    writeToEnvironmentFile:
+      titleId: M365_TITLE_ID
+      appId: M365_APP_ID
+      shareLink: SHARE_LINK
 projectId: 502996ce-62bc-49cb-bed6-76e4ac1369e2
