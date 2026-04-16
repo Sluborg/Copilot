@@ -31,7 +31,7 @@ model CinodeAvailabilityEntry {
 // --- API ---
 
 @service
-@server("https://api.cinode.com")
+@server(Environment.PA_APP_SERVER_URL)
 @actions(CinodeAPI.ACTIONS_METADATA)
 namespace CinodeAPI {
   const ACTIONS_METADATA = #{

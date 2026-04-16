@@ -54,6 +54,7 @@ The following are TypeSpec template files. You need to customize these files to 
 | `src/agent/actions/*.tsp` | These are action files containing API endpoints to extend your declarative agent.           |
 | `src/agent/prompts/*.tsp` | These are prompt files used for instructions inf your declarative agent.                    |
 | `src/agent/env.tsp`       | This is the file containing all environment variables to be used in TypeSpec files.         |
+| `PsCommands.md`           | Quick reference for manual development commands (relay start/stop, cache clear, deploy).    |
 
 ## Extend the template
 

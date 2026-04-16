@@ -4,10 +4,11 @@
     {
       "label": "Relay Server",
       "type": "shell",
-      "command": "cd C:\\Dev\\Template\\mcp\\flow-relay-mcp-server && node dist/index.js",
+      "command": "cd C:\\Dev\\Copilot\\flow-relay-mcp-server && node dist/index.js",
       "isBackground": true,
       "options": {
         "env": {
+          "CINODE_BASIC_TOKEN": "Basic MDE2ZDk1NTdhMjc1ZjQ4NGY1YzZjY2ZkOTcyZDRiYTAuYXBwLmNpbm9kZS5jb206MTE3N2Q5MzQ0MTUyZWUyYTljNDU4M2JmMTJhMWY3MDk=",
           "NODE_TLS_REJECT_UNAUTHORIZED": "0",
           "FLOW_WEBHOOK_URL": "https://f97ec0186468e5028db0622bbd110e.5a.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/5ac24948f429454fabd65f9060edc478/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=8_E3xI3I2iaIzhy122smoXJi9ksgAwyEYmrlTEN-hqE",
           "TRANSPORT": "http",

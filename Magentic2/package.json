@@ -1,6 +1,6 @@
 {
   "name": "magentic2",
-  "version": "1.415.7",
+  "version": "1.416.4",
   "scripts": {
     "compile": "tsp compile ./src/agent/main.tsp --config ./tspconfig.yaml",
     "generate:env": "node scripts/generate-env.js",
@@ -8,7 +8,10 @@
     "patch:plugin-auth": "node scripts/patch-plugin-auth.js",
     "patch:agent-version": "node scripts/patch-agent-version.js",
     "patch:pa-remove-card": "node scripts/patch-pa-remove-card.js",
-    "patch:cinode-auth": "node scripts/patch-cinode-auth.js dev"
+    "patch:cinode-auth": "node scripts/patch-cinode-auth.js dev",
+    "relay:start": "powershell -ExecutionPolicy Bypass -File \"C:\\\\Dev\\\\Copilot\\\\Magentic2\\\\scripts\\\\start-relay.ps1\"",
+    "relay:stop": "powershell -ExecutionPolicy Bypass -File \"C:\\\\Dev\\\\Copilot\\\\Magentic2\\\\scripts\\\\stop-relay.ps1\"",
+    "teams:cache:clear": "powershell -ExecutionPolicy Bypass -File \"C:\\\\Dev\\\\Copilot\\\\Magentic2\\\\scripts\\\\clear-teams-cache.ps1\""
   },
   "devDependencies": {
     "@microsoft/typespec-m365-copilot": "^1.0.0",

@@ -1,0 +1,43 @@
+openapi: 3.0.3
+info:
+  title: Flow Relay
+  description: Relay messages to a Power Automate flow
+  version: 1.0.0
+servers:
+  - url: https://b654j2qz-3001.euw.devtunnels.ms
+    description: Dev tunnel to local relay server
+paths:
+  /send-to-flow:
+    post:
+      operationId: sendToFlow
+      summary: Send a text message to the Power Automate flow
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The message to send to the flow
+              required:
+                - text
+      responses:
+        "200":
+          description: Flow triggered successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  status:
+                    type: integer
+                  body:
+                    type: string
+        "400":
+          description: Missing or invalid text field
+        "502":
+          description: Flow returned an error

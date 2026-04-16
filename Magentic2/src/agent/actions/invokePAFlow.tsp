@@ -18,6 +18,7 @@ namespace PAFlowAPI {
 
   model PAFlowRequest {
     text: string;
+    secret: string = Environment.RELAY_SECRET;
   }
 
   model PAFlowResponse {

@@ -1,0 +1,46 @@
+$port = 3001
+
+$envFiles = @(
+  "C:\Dev\Copilot\Magentic2\env\.env.dev",
+  "C:\Dev\Copilot\Magentic2\env\.env.dev.user"
+)
+
+foreach ($file in $envFiles) {
+  if (Test-Path $file) {
+    Get-Content $file | ForEach-Object {
+      if ($_ -and $_ -notmatch '^\s*#' -and $_ -match '=') {
+        $k, $v = $_ -split '=', 2
+        $k = $k.Trim()
+        $v = $v.Trim().Trim('"')
+        if ($k) {
+          Set-Item -Path "Env:$k" -Value $v
+        }
+      }
+    }
+  }
+}
+
+if ($env:CINODE_API_KEY) {
+  $env:CINODE_BASIC_TOKEN = $env:CINODE_API_KEY
+}
+
+$env:TRANSPORT = 'http'
+$env:PORT = "$port"
+$env:NODE_TLS_REJECT_UNAUTHORIZED = '0'
+
+$listener = Get-NetTCPConnection -LocalPort $port -State Listen -ErrorAction SilentlyContinue
+if ($listener) {
+  $pids = $listener | Select-Object -ExpandProperty OwningProcess -Unique
+  Write-Host "Relay appears to already be running on port $port (PID(s): $($pids -join ', '))." -ForegroundColor Yellow
+  Write-Host "Use stop-relay.ps1 (or npm run relay:stop) before starting a new instance." -ForegroundColor Yellow
+  exit 0
+}
+
+$relayDir = "C:\Dev\Copilot\flow-relay-mcp-server"
+Push-Location $relayDir
+try {
+  node "dist\index.js"
+}
+finally {
+  Pop-Location
+}
