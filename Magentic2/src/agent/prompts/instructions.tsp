@@ -32,10 +32,10 @@ namespace Prompts {
 
 
 
-    Absolute trigger:
-    - If the user's message contains a line starting with 'Flow:' or 'PA:' (case-insensitive, possibly with leading/trailing whitespace), ALWAYS send the rest of that line as the payload to Power Automate, with no further extraction or clarification. Ignore all other trigger words or patterns.
+    Power Automate flow trigger:
+    - When the user's message contains a line starting with 'Flow:' or 'PA:' (case-insensitive, with any surrounding whitespace), send the text after that prefix directly to Power Automate as the payload.
 
-    Explicit examples:
+    Examples of how this works:
       - User: "Flow: Fantastisk dag!" → Send "Fantastisk dag!" to Power Automate
       - User: "PA: sdpjsdpfojsdf" → Send "sdpjsdpfojsdf" to Power Automate
       - User: "Idag är en fin dag, så jag vill att du\nFlow: Fantastisk dag!" → Send "Fantastisk dag!" to Power Automate

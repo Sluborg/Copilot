@@ -1,9 +1,16 @@
 $port = 3001
 
-$envFiles = @(
-  "C:\Dev\Copilot\Magentic2\env\.env.dev",
-  "C:\Dev\Copilot\Magentic2\env\.env.dev.user"
+$forbiddenFiles = @(
+  "C:\Dev\Copilot\Magentic2\env\.env.dev.user",
+  "C:\Dev\Copilot\Magentic2\env\.env.local"
 )
+$existingForbidden = $forbiddenFiles | Where-Object { Test-Path $_ }
+if ($existingForbidden) {
+  Write-Error ("Forbidden env files detected. Use env/.env.dev only. Delete: " + ($existingForbidden -join ", "))
+  exit 2
+}
+
+$envFiles = @("C:\Dev\Copilot\Magentic2\env\.env.dev")
 
 foreach ($file in $envFiles) {
   if (Test-Path $file) {

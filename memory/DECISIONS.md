@@ -9,3 +9,7 @@ Capture key decisions and rationale so future agents avoid re-litigating settled
 - 2026-04-15: Cinode actions now hardcode company ID 1851 in TypeSpec routes and removed companyId parameters so the agent never asks users for company selection.
 - 2026-04-15: Cinode plugin auth patch now generates cinodeapi-apiplugin.json from the emitted OpenAPI spec when the TypeSpec emitter references the action in declarativeAgent.json but omits the plugin file.
 - 2026-04-15: Removed teamsApp/extendToM365 from the normal provision lifecycle and added a separate deploy lifecycle for explicit M365 extension updates, because routine provision/update was blocked by repeat timeout failures.
+- 2026-04-16: Added Work IQ as a second MCP server in Magentic2/.vscode/mcp.json instead of replacing the existing cinode relay entry, to avoid regressing current relay-backed functionality.
+- 2026-04-16: Added root-level Copilot tasks for Magentic2 startup and deploy so VS Code task discovery works from the actual workspace folder the user opens.
+- 2026-04-16: Removed folder-open auto-start and exposed explicit top-level tasks named Start It All Up and Deploy New Agent Version to match the user's intended workflow.
+- 2026-04-16: Replaced regex-based tunnel URL patching with a shared script that uses devtunnel JSON output, and wired both task files to that script for deterministic PA_APP_SERVER_URL updates.
