@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://aka.ms/m365-agents-toolkits/v1.10/yaml.schema.json
+version: v1.10
+
+deploy:
+  - uses: teamsApp/update
+    with:
+      appPackagePath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip
+
+  - uses: teamsApp/extendToM365
+    with:
+      appPackagePath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip
+      scope: ${{AGENT_SCOPE}}
+    writeToEnvironmentFile:
+      titleId: M365_TITLE_ID
+      appId: M365_APP_ID
+      shareLink: SHARE_LINK
+
+projectId: 502996ce-62bc-49cb-bed6-76e4ac1369e2

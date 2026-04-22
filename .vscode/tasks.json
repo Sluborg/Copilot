@@ -2,43 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Start Agent Locally",
-            "dependsOn": [
-                "Validate prerequisites",
-                "Create resources"
-            ],
-            "dependsOrder": "sequence"
-        },
-        {
-            "label": "Validate prerequisites",
-            "type": "teamsfx",
-            "command": "debug-check-prerequisites",
-            "args": {
-                "prerequisites": [
-                    "copilotAccess"
-                ]
-            }
-        },
-        {
-            "label": "Create resources",
-            "type": "teamsfx",
-            "command": "provision",
-            "args": {
-                "env": "local"
-            }
-        },
-        {
-            "label": "Install dependencies",
-            "type": "shell",
-            "command": "npm install",
-            "presentation": {
-                "reveal": "silent",
-                "panel": "new"
-            },
-            "runOptions": { "runOn": "folderOpen" }
-        },
-        {
-            "label": "Relay Server",
+            "label": "Magentic2: Relay Server",
             "type": "shell",
             "command": "@('C:\\Dev\\Copilot\\Magentic2\\env\\.env.dev') | Where-Object { Test-Path $_ } | ForEach-Object { Get-Content $_ | ForEach-Object { if ($_ -and $_ -notmatch '^\\s*#' -and $_ -match '=') { $k,$v = $_ -split '=',2; $k=$k.Trim(); $v=$v.Trim().Trim('\\\"'); if ($k) { Set-Item -Path \"Env:$k\" -Value $v } } } }; $env:CINODE_BASIC_TOKEN=$env:CINODE_API_KEY; $env:TRANSPORT='http'; $env:PORT='3001'; $env:NODE_TLS_REJECT_UNAUTHORIZED='0'; node 'C:\\Dev\\Copilot\\flow-relay-mcp-server\\dist\\index.js'",
             "isBackground": true,
@@ -46,11 +10,11 @@
             "presentation": {
                 "reveal": "always",
                 "panel": "dedicated",
-                "group": "dev"
+                "group": "magentic2-dev"
             }
         },
         {
-            "label": "Dev Tunnel",
+            "label": "Magentic2: Dev Tunnel",
             "type": "shell",
             "command": "devtunnel host magentic2-relay",
             "isBackground": true,
@@ -58,27 +22,33 @@
             "presentation": {
                 "reveal": "always",
                 "panel": "dedicated",
-                "group": "dev"
+                "group": "magentic2-dev"
             }
         },
         {
-            "label": "Start It All Up",
-            "dependsOn": ["Relay Server", "Dev Tunnel"],
-            "dependsOrder": "sequence",
+            "label": "Magentic2: Start Dev Services",
+            "dependsOn": [
+                "Magentic2: Relay Server",
+                "Magentic2: Dev Tunnel"
+            ],
             "problemMatcher": []
         },
         {
-            "label": "Patch Tunnel URL",
+            "label": "Magentic2: Patch Tunnel URL",
             "type": "shell",
             "command": "powershell -ExecutionPolicy Bypass -File scripts\\patch-tunnel-url.ps1",
+            "options": {
+                "cwd": "C:\\Dev\\Copilot\\Magentic2"
+            },
             "problemMatcher": [],
             "presentation": {
                 "reveal": "always",
-                "panel": "shared"
+                "panel": "shared",
+                "group": "magentic2-dev"
             }
         },
         {
-            "label": "Relay Health",
+            "label": "Magentic2: Relay Health",
             "type": "shell",
             "command": "npm run relay:test:health",
             "options": {
@@ -88,8 +58,18 @@
             "presentation": {
                 "reveal": "always",
                 "panel": "shared",
-                "group": "dev"
+                "group": "magentic2-dev"
             }
+        },
+        {
+            "label": "Start It All Up",
+            "dependsOn": [
+                "Magentic2: Start Dev Services",
+                "Magentic2: Patch Tunnel URL",
+                "Magentic2: Relay Health"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
         },
         {
             "label": "Deploy New Agent Version",
@@ -102,12 +82,15 @@
             "presentation": {
                 "reveal": "always",
                 "panel": "dedicated",
-                "group": "dev"
+                "group": "magentic2-dev"
             }
         },
         {
-            "label": "Smart Deploy (VS Code)",
-            "dependsOn": ["Start It All Up", "Patch Tunnel URL", "Relay Health", "Deploy New Agent Version"],
+            "label": "Magentic2: Smart Deploy",
+            "dependsOn": [
+                "Start It All Up",
+                "Deploy New Agent Version"
+            ],
             "dependsOrder": "sequence",
             "problemMatcher": [],
             "group": {

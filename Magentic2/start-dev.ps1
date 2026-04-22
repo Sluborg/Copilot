@@ -5,6 +5,7 @@
 param(
     [string]$RelayPath = "C:\Dev\Template\mcp\flow-relay-mcp-server",
     [string]$AgentPath = "C:\Dev\Copilot\Magentic2",
+    [string]$TunnelName = "magentic2-relay",
     [int]$Port = 3001
 )
 
@@ -43,14 +44,32 @@ try {
     exit 1
 }
 
+# --- Ensure named devtunnel exists ---
+Write-Host "Ensuring named devtunnel $TunnelName on port $Port..." -ForegroundColor Cyan
+
+try {
+    devtunnel show $TunnelName --json 2>&1 | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+        throw "Tunnel missing"
+    }
+} catch {
+    devtunnel create $TunnelName --allow-anonymous | Out-Null
+}
+
+$showJson = devtunnel show $TunnelName --json | ConvertFrom-Json
+$portExists = @($showJson.tunnel.ports) | Where-Object { $_.portNumber -eq $Port } | Select-Object -First 1
+if (-not $portExists) {
+    devtunnel port create $TunnelName -p $Port | Out-Null
+}
+
 # --- Start devtunnel and capture URL ---
-Write-Host "Starting devtunnel on port $Port..." -ForegroundColor Cyan
+Write-Host "Starting named devtunnel $TunnelName..." -ForegroundColor Cyan
 
 $tunnelLog = "$env:TEMP\devtunnel-output.txt"
 if (Test-Path $tunnelLog) { Remove-Item $tunnelLog }
 
 Start-Process powershell -ArgumentList "-NoExit", "-Command", @"
-    devtunnel host -p $Port --allow-anonymous 2>&1 | Tee-Object -FilePath '$tunnelLog'
+    devtunnel host $TunnelName 2>&1 | Tee-Object -FilePath '$tunnelLog'
 "@
 
 Write-Host "Waiting for tunnel URL..." -ForegroundColor Cyan

@@ -236,6 +236,14 @@ applyTo: '**/*.tsp'
 - Never commit secrets or API keys in `.env` files — use secure storage (e.g., Azure Key Vault).
 - Document required environment variables in the project README.
 
+## Magentic2 Env Policy (Mandatory)
+
+- Use `env/.env.dev` as the only development environment file and single source of truth.
+- Do not create, read, or merge from `env/.env.dev.user`.
+- Do not create, read, or merge from `env/.env.local` for this project.
+- If a tool recreates either extra file, immediately move any needed values to `env/.env.dev` and delete the extra file(s).
+- Keep `env/.env.dev` gitignored.
+
 ## Validation and Testing
 
 - Always compile TypeSpec before provisioning: `npm run compile`.

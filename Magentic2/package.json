@@ -1,6 +1,6 @@
 {
   "name": "magentic2",
-  "version": "1.416.4",
+  "version": "1.422.2",
   "scripts": {
     "compile": "tsp compile ./src/agent/main.tsp --config ./tspconfig.yaml",
     "generate:env": "node scripts/generate-env.js",
@@ -11,7 +11,15 @@
     "patch:cinode-auth": "node scripts/patch-cinode-auth.js dev",
     "relay:start": "powershell -ExecutionPolicy Bypass -File \"C:\\\\Dev\\\\Copilot\\\\Magentic2\\\\scripts\\\\start-relay.ps1\"",
     "relay:stop": "powershell -ExecutionPolicy Bypass -File \"C:\\\\Dev\\\\Copilot\\\\Magentic2\\\\scripts\\\\stop-relay.ps1\"",
-    "teams:cache:clear": "powershell -ExecutionPolicy Bypass -File \"C:\\\\Dev\\\\Copilot\\\\Magentic2\\\\scripts\\\\clear-teams-cache.ps1\""
+    "relay:patch:tunnel-url": "powershell -ExecutionPolicy Bypass -File \"C:\\\\Dev\\\\Copilot\\\\Magentic2\\\\scripts\\\\patch-tunnel-url.ps1\"",
+    "relay:test:health": "powershell -ExecutionPolicy Bypass -File \"C:\\\\Dev\\\\Copilot\\\\Magentic2\\\\scripts\\\\test-health.ps1\"",
+    "deploy:smart": "powershell -ExecutionPolicy Bypass -File \"C:\\\\Dev\\\\Copilot\\\\Magentic2\\\\scripts\\\\deploy-smart.ps1\"",
+    "deploy:smart:health": "powershell -ExecutionPolicy Bypass -File \"C:\\\\Dev\\\\Copilot\\\\Magentic2\\\\scripts\\\\deploy-smart.ps1\" -HealthOnly",
+    "startup:smart": "powershell -ExecutionPolicy Bypass -File \"C:\\\\Dev\\\\Copilot\\\\Magentic2\\\\scripts\\\\startup-smart.ps1\"",
+    "startup:smart:force": "powershell -ExecutionPolicy Bypass -File \"C:\\\\Dev\\\\Copilot\\\\Magentic2\\\\scripts\\\\startup-smart.ps1\" -ForceDeploy",
+    "teams:cache:clear": "powershell -ExecutionPolicy Bypass -File \"C:\\\\Dev\\\\Copilot\\\\Magentic2\\\\scripts\\\\clear-teams-cache.ps1\"",
+    "app:open:dev": "powershell -NoProfile -Command \"$id=(Get-Content .\\env\\.env.dev | Select-String '^TEAMS_APP_ID=').ToString().Split('=')[1].Trim(); Start-Process ('https://teams.microsoft.com/l/app/' + $id)\"",
+    "app:reset:dev": "powershell -NoProfile -Command \"atk uninstall -i false --mode env --env dev --options 'm365-app,app-registration,bot-framework-registration'; npm run compile; npm run patch:pa-spec; npm run patch:plugin-auth; npm run patch:pa-remove-card; atk provision --env dev\""
   },
   "devDependencies": {
     "@microsoft/typespec-m365-copilot": "^1.0.0",
