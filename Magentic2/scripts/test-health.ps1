@@ -5,6 +5,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 $localHealthUrl = "http://localhost:3001/health"
+$namedTunnel = "magentic2-relay"
 $allChecksPassed = $true
 $script:EnvValueSource = $null
 
@@ -34,20 +35,14 @@ function Get-EnvValue {
 
 function Get-TunnelUrlFromDevTunnel {
   try {
-    $listOutput = devtunnel list 2>&1 | Out-String
-    $idMatch = [regex]::Match($listOutput, "([a-z0-9-]+\.[a-z]{3})\s+\d+", [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
-    if (-not $idMatch.Success) {
+    $showJson = devtunnel show $namedTunnel --json 2>&1 | Out-String
+    $showObj = $showJson | ConvertFrom-Json
+    $portEntry = $showObj.tunnel.ports | Where-Object { $_.portNumber -eq 3001 } | Select-Object -First 1
+    if (-not $portEntry -or [string]::IsNullOrWhiteSpace($portEntry.portUri)) {
       return $null
     }
 
-    $tunnelId = $idMatch.Groups[1].Value
-    $showOutput = devtunnel show $tunnelId 2>&1 | Out-String
-    $urlMatch = [regex]::Match($showOutput, "(https://\S+\.devtunnels\.ms)", [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
-    if (-not $urlMatch.Success) {
-      return $null
-    }
-
-    return $urlMatch.Groups[1].Value.TrimEnd('/')
+    return $portEntry.portUri.TrimEnd('/')
   } catch {
     return $null
   }
@@ -98,7 +93,7 @@ if (-not $SkipTunnel) {
   if ([string]::IsNullOrWhiteSpace($TunnelUrl)) {
     $TunnelUrl = Get-TunnelUrlFromDevTunnel
     if (-not [string]::IsNullOrWhiteSpace($TunnelUrl)) {
-      Write-Host "Using tunnel URL auto-detected from devtunnel." -ForegroundColor Gray
+      Write-Host "Using tunnel URL from named dev tunnel $namedTunnel." -ForegroundColor Gray
     }
   }
 

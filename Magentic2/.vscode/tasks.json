@@ -52,7 +52,7 @@
         {
             "label": "Dev Tunnel",
             "type": "shell",
-            "command": "devtunnel host -p 3001 --allow-anonymous",
+            "command": "devtunnel host magentic2-relay",
             "isBackground": true,
             "problemMatcher": [],
             "presentation": {

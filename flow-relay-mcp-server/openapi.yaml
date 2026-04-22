@@ -4,7 +4,7 @@ info:
   description: Relay messages to a Power Automate flow
   version: 1.0.0
 servers:
-  - url: https://b654j2qz-3001.euw.devtunnels.ms
+  - url: https://hzwfsjj5-3001.euw.devtunnels.ms
     description: Dev tunnel to local relay server
 paths:
   /send-to-flow:

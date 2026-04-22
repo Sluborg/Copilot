@@ -5,14 +5,64 @@
   const fs = require("fs");
   const path = require("path");
 
+  function parseEnvFile(filePath) {
+    const vars = {};
+    const raw = fs.readFileSync(filePath, "utf8");
+
+    for (const rawLine of raw.split(/\r?\n/)) {
+      const line = rawLine.trim();
+      if (!line || line.startsWith("#")) continue;
+
+      const cleaned = line.replace(/^export\s+/, "");
+      const match = cleaned.match(/^([A-Za-z0-9_.-]+)\s*=\s*(.*)$/);
+      if (!match) continue;
+
+      const key = match[1];
+      let value = match[2] || "";
+
+      if (
+        (value.startsWith('"') && value.endsWith('"')) ||
+        (value.startsWith("'") && value.endsWith("'"))
+      ) {
+        value = value.slice(1, -1);
+      }
+
+      value = value.replace(/\\n/g, "\n").replace(/\\r/g, "\r");
+      vars[key] = value;
+    }
+
+    return vars;
+  }
+
+  function mergeEnvIntoPrimary(primaryPath, secondaryPath) {
+    const primaryVars = fs.existsSync(primaryPath) ? parseEnvFile(primaryPath) : {};
+    const secondaryVars = parseEnvFile(secondaryPath);
+    const merged = { ...primaryVars, ...secondaryVars };
+
+    const output = [];
+    for (const [key, value] of Object.entries(merged)) {
+      output.push(`${key}=${value}`);
+    }
+
+    fs.writeFileSync(primaryPath, output.join("\n") + "\n", "utf8");
+  }
+
   try {
     const envArg = process.argv[2] || "dev";
 
     // src/agent is the parent of this scripts directory
     const repoAgentDir = path.resolve(__dirname, "..");
     const envDir = path.join(repoAgentDir, "env");
+    const toolkitEnvFile = path.join(envDir, `.env.${envArg}.user`);
+
+    if (fs.existsSync(toolkitEnvFile)) {
+      const primaryEnvFile = path.join(envDir, `.env.${envArg}`);
+      mergeEnvIntoPrimary(primaryEnvFile, toolkitEnvFile);
+      fs.unlinkSync(toolkitEnvFile);
+      console.log(`Merged toolkit env file into ${path.basename(primaryEnvFile)} and removed ${path.basename(toolkitEnvFile)}`);
+    }
+
     const forbiddenEnvFiles = [
-      path.join(envDir, ".env.dev.user"),
       path.join(envDir, ".env.local"),
     ].filter((p) => fs.existsSync(p));
     if (forbiddenEnvFiles.length > 0) {
@@ -41,31 +91,8 @@
 
     // Merge env files in order; later files override earlier files.
     for (const envFilePath of existingEnvFiles) {
-      const raw = fs.readFileSync(envFilePath, "utf8");
-
-      for (const rawLine of raw.split(/\r?\n/)) {
-        const line = rawLine.trim();
-        if (!line || line.startsWith("#")) continue;
-
-        // support lines like KEY=value or export KEY=value
-        const cleaned = line.replace(/^export\s+/, "");
-        const match = cleaned.match(/^([A-Za-z0-9_.-]+)\s*=\s*(.*)$/);
-        if (!match) continue;
-
-        const key = match[1];
-        let value = match[2] || "";
-
-        // strip surrounding single or double quotes
-        if (
-          (value.startsWith('"') && value.endsWith('"')) ||
-          (value.startsWith("'") && value.endsWith("'"))
-        ) {
-          value = value.slice(1, -1);
-        }
-
-        // Unescape common sequences (keep as-is if not needed)
-        value = value.replace(/\\n/g, "\n").replace(/\\r/g, "\r");
-
+      const parsedVars = parseEnvFile(envFilePath);
+      for (const [key, value] of Object.entries(parsedVars)) {
         vars[key] = value;
       }
     }

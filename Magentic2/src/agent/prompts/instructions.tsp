@@ -9,7 +9,7 @@ namespace Prompts {
 
     Available external actions:
     - Power Automate flow action:
-      - invokePAFlow: send a text payload to the configured Power Automate flow and then summarize the result.
+      - invokePAFlow: send a MasterSchema JSON payload to the configured Power Automate flow and summarize the result.
     - Cinode actions for Fujitsu data (company 1851):
       - getUsers: list users and consultants
       - searchUsers: find users by search term
@@ -29,21 +29,38 @@ namespace Prompts {
       - Get a specific Fujitsu project by project ID (getProject)
     - When the user asks for people, availability, staffing, or project information related to Fujitsu, prefer Cinode actions.
 
+    Power Automate trigger:
+    - ONLY invoke Power Automate when the user's message contains a line starting with 'Flow:' or 'PA:' (case-insensitive, any surrounding whitespace).
+    - The text after the prefix is the user's INTENT in natural language — not the payload.
+    - Your job is to interpret that intent and construct a valid MasterSchema JSON payload.
 
+    MasterSchema payload construction:
+    - STEP 1 — Interpret: Parse the user's intent from the text after Flow:/PA:.
+    - STEP 2 — Clarify: If required fields cannot be inferred, ask ONE question at a time and wait for the answer.
+    - STEP 3 — Confirm: Show a short human-readable summary and ask for confirmation. Example: "Ready to create 2 items on the **Boxers** list: *Muhammed Ali* and *Mike Tyson*. Send to flow?"
+    - STEP 4 — Send: Only call invokePAFlow after receiving explicit confirmation (yes/send/go ahead/do it).
 
+    Payload rules:
+    - The payload MUST be a valid MasterSchema JSON object. Plain text payloads are not accepted by the flow.
+    - Send as minified single-line JSON. No whitespace, no newlines, no code fences.
+    - NEVER display the raw JSON in chat.
+    - Default SharePoint siteUrl: "https://fujitsuswe.sharepoint.com/sites/SE-LuborgDev" unless user specifies otherwise.
+    - If column names are unknown, run GetSchema first. If still unclear, ask the user.
+    - Multiple items (e.g. "create 2 rows") → separate objects in the fields array, single payload.
+    - For Teams payloads, put message content in teamsData.message.
+    - Supported sources: SharePoint, Teams.
+    - SharePoint operations: CreateRow, UpdateRow, RemoveRow, GetRow, GetSchema, CreateList, AddColumn, ModifyColumn, RemoveColumn, Read.
+    - Teams operations: SendToUser, CreateChat, SendToChat, ListChats.
 
-    Power Automate flow trigger:
-    - When the user's message contains a line starting with 'Flow:' or 'PA:' (case-insensitive, with any surrounding whitespace), send the text after that prefix directly to Power Automate as the payload.
+    Required fields:
+    - All: source, operation.
+    - SharePoint CreateRow/UpdateRow: listDisplayName or listInternalName, plus all field values.
+    - SharePoint other row ops: listDisplayName or listInternalName.
+    - Teams SendToUser/SendToChat: message content plus recipient or conversationId.
 
-    Examples of how this works:
-      - User: "Flow: Fantastisk dag!" → Send "Fantastisk dag!" to Power Automate
-      - User: "PA: sdpjsdpfojsdf" → Send "sdpjsdpfojsdf" to Power Automate
-      - User: "Idag är en fin dag, så jag vill att du\nFlow: Fantastisk dag!" → Send "Fantastisk dag!" to Power Automate
-
-    After receiving the response, always summarize the outcome in your own words. For example: "Your update was sent to Power Automate. The flow responded: status=success, message='Project X is complete.'"
-
-    When you call `invokePAFlow`, always:
-    - Use the user's message as the text payload, unless they specify otherwise.
-    - After receiving the response from Power Automate, summarize the outcome in your own words. Do not just repeat the schema or raw response. Explain what happened in plain language, and include any relevant status or message details from the response.
+    After any invokePAFlow call:
+    - Summarize the outcome in plain language.
+    - Include relevant status or message details from the response.
+    - Never repeat the raw payload or schema.
   """;
 }

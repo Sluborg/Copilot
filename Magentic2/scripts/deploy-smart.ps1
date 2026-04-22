@@ -8,9 +8,10 @@ $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $repoRoot = Resolve-Path (Join-Path $scriptDir "..")
 Set-Location $repoRoot
 
+$tunnelName = "magentic2-relay"
 $port = 3001
 $envFile = Join-Path $repoRoot "env/.env.dev"
-$tunnelLog = Join-Path $env:TEMP "magentic2-devtunnel-output.txt"
+$tunnelLog = Join-Path $env:TEMP ("magentic2-devtunnel-output-" + $PID + ".txt")
 $forbiddenEnvFiles = @(
   (Join-Path $repoRoot "env/.env.dev.user"),
   (Join-Path $repoRoot "env/.env.local")
@@ -59,7 +60,7 @@ function Start-RelayBackground {
   $startRelayScript = Join-Path $scriptDir "start-relay.ps1"
   Write-Host "`n==> Start relay" -ForegroundColor Cyan
   Write-Host "    powershell -ExecutionPolicy Bypass -File $startRelayScript" -ForegroundColor DarkGray
-  Start-Process powershell -ArgumentList "-ExecutionPolicy", "Bypass", "-File", $startRelayScript | Out-Null
+  Start-Process powershell -WindowStyle Hidden -ArgumentList "-ExecutionPolicy", "Bypass", "-File", $startRelayScript | Out-Null
 }
 
 function Wait-ForLocalRelay {
@@ -83,27 +84,46 @@ function Wait-ForLocalRelay {
 
 function Get-TunnelUrlFromDevTunnel {
   try {
-    $listOutput = devtunnel list 2>&1 | Out-String
-    $urlMatch = [regex]::Match($listOutput, "(https://[a-z0-9-]+-$port\.[a-z]+\.devtunnels\.ms)", [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
-    if ($urlMatch.Success) {
-      return $urlMatch.Groups[1].Value.TrimEnd('/')
-    }
+    $showJson = devtunnel show $tunnelName --json 2>&1 | Out-String
+    $showObj = $showJson | ConvertFrom-Json
+    $portEntry = $showObj.tunnel.ports | Where-Object { $_.portNumber -eq $port } | Select-Object -First 1
 
-    $idMatch = [regex]::Match($listOutput, "([a-z0-9-]+\.[a-z]{3})\s+$port", [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
-    if (-not $idMatch.Success) {
-      return $null
-    }
+    if ($portEntry -and -not [string]::IsNullOrWhiteSpace($portEntry.portUri)) {
+      $candidate = $portEntry.portUri.TrimEnd('/')
+      try {
+        $health = Invoke-RestMethod -Uri ($candidate + "/health") -TimeoutSec 5
+        if ($health -and $health.status -eq "ok") {
+          return $candidate
+        }
+      } catch {
+      }
 
-    $tunnelId = $idMatch.Groups[1].Value
-    $showOutput = devtunnel show $tunnelId 2>&1 | Out-String
-    $showMatch = [regex]::Match($showOutput, "(https://\S+\.devtunnels\.ms)", [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
-    if ($showMatch.Success) {
-      return $showMatch.Groups[1].Value.TrimEnd('/')
+      return $candidate
     }
   } catch {
   }
 
   return $null
+}
+
+function Ensure-NamedDevTunnelExists {
+  try {
+    devtunnel show $tunnelName --json 2>&1 | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+      throw "Tunnel missing"
+    }
+  } catch {
+    Write-Host "Creating named dev tunnel: $tunnelName" -ForegroundColor Yellow
+    devtunnel create $tunnelName --allow-anonymous | Out-Null
+  }
+
+  $showJson = devtunnel show $tunnelName --json 2>&1 | Out-String
+  $showObj = $showJson | ConvertFrom-Json
+  $portEntry = $showObj.tunnel.ports | Where-Object { $_.portNumber -eq $port } | Select-Object -First 1
+  if (-not $portEntry) {
+    Write-Host "Adding port $port to named tunnel: $tunnelName" -ForegroundColor Yellow
+    devtunnel port create $tunnelName -p $port | Out-Null
+  }
 }
 
 function Set-EnvValue {
@@ -127,19 +147,21 @@ function Set-EnvValue {
 }
 
 function Ensure-DevTunnel {
+  Ensure-NamedDevTunnelExists
+
   $tunnelUrl = Get-TunnelUrlFromDevTunnel
   if (-not [string]::IsNullOrWhiteSpace($tunnelUrl)) {
-    Write-Host "Using existing dev tunnel: $tunnelUrl" -ForegroundColor Green
+    Write-Host "Using named dev tunnel ${tunnelName}: $tunnelUrl" -ForegroundColor Green
     Set-EnvValue -Key "PA_APP_SERVER_URL" -Value $tunnelUrl
     return
   }
 
-  Write-Host "No dev tunnel detected. Starting a new tunnel..." -ForegroundColor Yellow
+  Write-Host "Named dev tunnel not active. Starting host for $tunnelName..." -ForegroundColor Yellow
   if (Test-Path $tunnelLog) {
     Remove-Item $tunnelLog -Force
   }
 
-  Start-Process powershell -ArgumentList "-NoExit", "-Command", "devtunnel host -p $port --allow-anonymous 2>&1 | Tee-Object -FilePath '$tunnelLog'" | Out-Null
+  Start-Process powershell -WindowStyle Hidden -ArgumentList "-Command", "devtunnel host $tunnelName 2>&1 | Tee-Object -FilePath '$tunnelLog'" | Out-Null
 
   $attempt = 0
   $maxAttempts = 20

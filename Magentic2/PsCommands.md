@@ -22,7 +22,7 @@ npm run relay:stop
 npm run relay:test:health
 
 ### relay:patch:tunnel-url
-# Auto-detects the active dev tunnel on port 3001 and updates PA_APP_SERVER_URL in env/.env.dev.
+# Reads the named dev tunnel magentic2-relay on port 3001 and updates PA_APP_SERVER_URL in env/.env.dev.
 npm run relay:patch:tunnel-url
 
 ### teams:cache:clear
@@ -54,6 +54,17 @@ npm run deploy:smart
 
 # Health checks only (no deploy). Also ensures relay + dev tunnel are up.
 npm run deploy:smart:health
+
+# One-command startup for Desktop/Autostart use:
+# - Starts/repairs relay + tunnel
+# - Patches PA_APP_SERVER_URL
+# - Republishes only when URL changed (or when forced)
+# - Uses the named anonymous dev tunnel: magentic2-relay
+npm run startup:smart
+npm run startup:smart:force
+
+# BAT launcher for Desktop/Autostart:
+# C:\Dev\Copilot\Magentic2\Start-Magentic2.bat
 
 ## 3c. VS Code Integrated Terminal Workflow
 # Copilot now exposes the Magentic2 tasks at the workspace root, so they show up in Run Task.

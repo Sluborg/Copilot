@@ -1,5 +1,6 @@
 param(
   [string]$EnvFile = ".\\env\\.env.dev",
+  [string]$TunnelName = "magentic2-relay",
   [int]$Port = 3001,
   [int]$MaxAttempts = 30
 )
@@ -30,29 +31,23 @@ function Get-TunnelUrlFromId {
 }
 
 function Get-ActiveTunnelUrl {
-  param([int]$Port)
+  param(
+    [string]$TunnelName,
+    [int]$Port
+  )
 
   try {
-    $listJson = devtunnel list --json 2>&1 | Out-String
-    $listObj = $listJson | ConvertFrom-Json
-    $tunnels = @($listObj.tunnels)
-
-    foreach ($tunnel in ($tunnels | Where-Object { $_.hostConnections -gt 0 })) {
-      $url = Get-TunnelUrlFromId -TunnelId $tunnel.tunnelId -Port $Port
-      if (-not [string]::IsNullOrWhiteSpace($url)) {
-        try {
-          $healthUrl = $url.TrimEnd('/') + '/health'
-          $resp = Invoke-RestMethod -Uri $healthUrl -TimeoutSec 5
-          if ($resp -and $resp.status -eq 'ok') {
-            return $url
-          }
-        } catch {
+    $url = Get-TunnelUrlFromId -TunnelId $TunnelName -Port $Port
+    if (-not [string]::IsNullOrWhiteSpace($url)) {
+      try {
+        $healthUrl = $url.TrimEnd('/') + '/health'
+        $resp = Invoke-RestMethod -Uri $healthUrl -TimeoutSec 5
+        if ($resp -and $resp.status -eq 'ok') {
+          return $url
         }
+      } catch {
       }
-    }
 
-    foreach ($tunnel in $tunnels) {
-      $url = Get-TunnelUrlFromId -TunnelId $tunnel.tunnelId -Port $Port
       if (-not [string]::IsNullOrWhiteSpace($url)) {
         return $url
       }
@@ -70,14 +65,14 @@ if (-not (Test-Path $EnvFile)) {
 
 $tunnelUrl = $null
 for ($i = 0; $i -lt $MaxAttempts -and -not $tunnelUrl; $i++) {
-  $tunnelUrl = Get-ActiveTunnelUrl -Port $Port
+  $tunnelUrl = Get-ActiveTunnelUrl -TunnelName $TunnelName -Port $Port
   if (-not $tunnelUrl) {
     Start-Sleep -Seconds 1
   }
 }
 
 if (-not $tunnelUrl) {
-  Write-Error "Timed out waiting for an active dev tunnel URL on port $Port."
+  Write-Error "Timed out waiting for the named dev tunnel '$TunnelName' on port $Port."
   exit 1
 }
 
