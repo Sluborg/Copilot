@@ -3,7 +3,7 @@
 # Usage: .\deploy.ps1
 
 param(
-    [string]$AgentPath = "C:\Dev\Copilot\Magentic2"
+    [string]$AgentPath = "C:\Dev\Magentic2"
 )
 
 $ErrorActionPreference = "Stop"

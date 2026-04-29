@@ -1,7 +1,7 @@
 @echo off
 setlocal
 
-set "ROOT=C:\Dev\Copilot\Magentic2"
+set "ROOT=C:\Dev\Magentic2"
 set "SCRIPT=%ROOT%\scripts\startup-smart.ps1"
 
 if not exist "%SCRIPT%" (

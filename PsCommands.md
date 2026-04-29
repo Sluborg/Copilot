@@ -1,10 +1,12 @@
 # Manual Command Reference
 
 Quick reference for running common development commands. Use these commands when you need to manually start/stop services or clear caches during development.
+## Latest Redeploy
+npm run compile && npm run patch:pa-spec && npm run patch:plugin-auth && npm run patch:pa-remove-card && atk provision --env dev
 
 ## 1. Relay Server
 
-cd C:\Dev\Copilot\flow-relay-mcp-server
+cd C:\Dev\Magentic2\flow-relay-mcp-server
 
 # Environment variables are loaded automatically from env/.env.dev by start-relay.ps1
 # Keep env/.env.dev as your single source of truth (it is gitignored)
@@ -40,7 +42,7 @@ npm run app:open:dev
 npm run app:reset:dev
 
 ## 3. Deploy
-cd C:\Dev\Copilot\Magentic2
+cd C:\Dev\Magentic2
 npm run compile
 npm run patch:pa-spec
 npm run patch:plugin-auth
@@ -64,7 +66,7 @@ npm run startup:smart
 npm run startup:smart:force
 
 # BAT launcher for Desktop/Autostart:
-# C:\Dev\Copilot\Magentic2\Start-Magentic2.bat
+# C:\Dev\Magentic2\Start-Magentic2.bat
 
 ## 3c. VS Code Integrated Terminal Workflow
 # Copilot now exposes the Magentic2 tasks at the workspace root, so they show up in Run Task.
@@ -84,11 +86,11 @@ npm run startup:smart:force
 #   npm run relay:test:health
 
 # The older Magentic2-local task name is still in Magentic2/.vscode/tasks.json,
-# but the Copilot-root task is the main entry point when VS Code is opened on C:\Dev\Copilot.
+# but the Copilot-root task is the main entry point when VS Code is opened on C:\Dev\Magentic2.
 
 ## New Deploy (from Claude)
 # 3. Deploy agent
-cd C:\Dev\Copilot\Magentic2
+cd C:\Dev\Magentic2
 npm run compile && npm run patch:pa-spec && npm run patch:plugin-auth && npm run patch:cinode-auth && npm run patch:pa-remove-card && npm run patch:agent-version && atk provision --env dev
 
 ## 4. Test Relay (optional)

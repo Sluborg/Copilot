@@ -183,10 +183,6 @@ async function runHTTP(): Promise<void> {
 
   // REST endpoint for Agent Toolkit / OpenAPI
   app.post("/send-to-flow", async (req, res) => {
-    if (RELAY_SECRET && req.body.secret !== RELAY_SECRET) {
-      res.status(401).json({ error: "Unauthorized" });
-      return;
-    }
     const { text } = req.body;
     if (!text || typeof text !== "string") {
       res.status(400).json({ error: "Missing or invalid 'text' field" });

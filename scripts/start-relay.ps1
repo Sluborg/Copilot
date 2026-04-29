@@ -1,8 +1,8 @@
 $port = 3001
 
 $forbiddenFiles = @(
-  # "C:\Dev\Copilot\Magentic2\env\.env.dev.user",
-  "C:\Dev\Copilot\Magentic2\env\.env.local"
+  # "C:\Dev\Magentic2\env\.env.dev.user",
+  "C:\Dev\Magentic2\env\.env.local"
 )
 $existingForbidden = $forbiddenFiles | Where-Object { Test-Path $_ }
 if ($existingForbidden) {
@@ -10,7 +10,7 @@ if ($existingForbidden) {
   exit 2
 }
 
-$envFiles = @("C:\Dev\Copilot\Magentic2\env\.env.dev")
+$envFiles = @("C:\Dev\Magentic2\env\.env.dev")
 
 foreach ($file in $envFiles) {
   if (Test-Path $file) {
@@ -41,7 +41,7 @@ if ($listener) {
   exit 0
 }
 
-$relayDir = "C:\Dev\Copilot\flow-relay-mcp-server"
+$relayDir = "C:\Dev\Magentic2\flow-relay-mcp-server"
 Push-Location $relayDir
 try {
   node "dist\index.js"

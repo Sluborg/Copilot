@@ -4,7 +4,7 @@
 
 param(
     [string]$RelayPath = "C:\Dev\Template\mcp\flow-relay-mcp-server",
-    [string]$AgentPath = "C:\Dev\Copilot\Magentic2",
+    [string]$AgentPath = "C:\Dev\Magentic2",
     [string]$TunnelName = "magentic2-relay",
     [int]$Port = 3001
 )

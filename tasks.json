@@ -49,7 +49,7 @@
       "type": "shell",
       "command": "$url = (devtunnel list 2>&1 | Select-String '(https://[a-z0-9]+-3001\\.[a-z]+\\.devtunnels\\.ms)').Matches[0].Value; (Get-Content env\\.env.dev -Raw) -replace '(?m)^PA_APP_SERVER_URL=.*$', \"PA_APP_SERVER_URL=$url\" | Set-Content env\\.env.dev -NoNewline; Write-Host \"Patched .env.dev with $url\" -ForegroundColor Green; Write-Host ''; Write-Host \"Paste to Claude Code:\" -ForegroundColor Cyan; Write-Host \"Update PA_APP_SERVER_URL to $url in src/agent/env.tsp then rebuild\" -ForegroundColor Yellow",
       "options": {
-        "cwd": "C:\\Dev\\Copilot\\Magentic2"
+        "cwd": "C:\\Dev\\Magentic2"
       },
       "problemMatcher": [],
       "presentation": {
