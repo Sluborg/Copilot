@@ -53,14 +53,7 @@
     // src/agent is the parent of this scripts directory
     const repoAgentDir = path.resolve(__dirname, "..");
     const envDir = path.join(repoAgentDir, "env");
-    const toolkitEnvFile = path.join(envDir, `.env.${envArg}.user`);
 
-    if (fs.existsSync(toolkitEnvFile)) {
-      const primaryEnvFile = path.join(envDir, `.env.${envArg}`);
-      mergeEnvIntoPrimary(primaryEnvFile, toolkitEnvFile);
-      fs.unlinkSync(toolkitEnvFile);
-      console.log(`Merged toolkit env file into ${path.basename(primaryEnvFile)} and removed ${path.basename(toolkitEnvFile)}`);
-    }
 
     const forbiddenEnvFiles = [
       path.join(envDir, ".env.local"),

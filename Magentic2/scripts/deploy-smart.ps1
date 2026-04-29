@@ -13,7 +13,7 @@ $port = 3001
 $envFile = Join-Path $repoRoot "env/.env.dev"
 $tunnelLog = Join-Path $env:TEMP ("magentic2-devtunnel-output-" + $PID + ".txt")
 $forbiddenEnvFiles = @(
-  (Join-Path $repoRoot "env/.env.dev.user"),
+  # (Join-Path $repoRoot "env/.env.dev.user"),
   (Join-Path $repoRoot "env/.env.local")
 )
 
@@ -226,7 +226,7 @@ if ($HealthOnly) {
 Invoke-Cmd -Name "Compile" -Command "npm run compile"
 Invoke-Cmd -Name "Patch PA spec" -Command "npm run patch:pa-spec"
 Invoke-Cmd -Name "Patch plugin auth" -Command "npm run patch:plugin-auth"
-Invoke-Cmd -Name "Patch Cinode auth" -Command "npm run patch:cinode-auth"
+
 Invoke-Cmd -Name "Patch PA remove card" -Command "npm run patch:pa-remove-card"
 Invoke-Cmd -Name "Patch agent version" -Command "npm run patch:agent-version"
 Invoke-Cmd -Name "Provision dev" -Command "atk provision --env dev"

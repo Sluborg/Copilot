@@ -1,7 +1,6 @@
 import "@typespec/http";
 import "@typespec/openapi3";
 import "@microsoft/typespec-m365-copilot";
-import "./actions/cinode.tsp";
 import "./prompts/instructions.tsp";
 import "./env.tsp";
 import "./actions/invokePAFlow.tsp";
@@ -21,11 +20,9 @@ using TypeSpec.M365.Copilot.Agents;
 // })
 namespace Magentic2 {  
   // Include custom actions in the agent
-  op getUsers is CinodeAPI.getUsers;
-  op searchUsers is CinodeAPI.searchUsers;
-  op getAvailability is CinodeAPI.getAvailability;
-  op getProjects is CinodeAPI.getProjects;
-  op getProject is CinodeAPI.getProject;
+  op odsp is AgentCapabilities.OneDriveAndSharePoint<ItemsByUrl = [
+    { url: "https://fujitsuswe.sharepoint.com/sites/SE-LuborgDev/Shared%20Documents/MasterSchema.md" }
+  ]>;
 
   /** Send a text message to the Power Automate flow */
   op invokePAFlow is PAFlowAPI.invokePAFlow;

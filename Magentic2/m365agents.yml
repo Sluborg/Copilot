@@ -52,11 +52,6 @@ provision:
       args: run patch:plugin-auth
 
   - uses: cli/runNpmCommand
-    name: Patch Cinode API key auth
-    with:
-      args: run patch:cinode-auth
-
-  - uses: cli/runNpmCommand
     name: Remove PA flow adaptive card
     with:
       args: run patch:pa-remove-card
@@ -85,6 +80,14 @@ provision:
     with:
       # Relative path to this file. This is the path for built zip file.
       appPackagePath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip
+
+  # Extend app to M365 for Copilot/Teams visibility
+  - uses: teamsApp/extendToM365
+    with:
+      appPackagePath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip
+    writeToEnvironmentFile:
+      titleId: M365_TITLE_ID
+      appId: M365_APP_ID
 
 # Triggered when 'teamsapp publish' is executed
 publish:
@@ -115,10 +118,7 @@ publish:
     with:
       args: run patch:plugin-auth
 
-  - uses: cli/runNpmCommand
-    name: Patch Cinode API key auth
-    with:
-      args: run patch:cinode-auth
+
 
   - uses: cli/runNpmCommand
     name: Remove PA flow adaptive card
@@ -188,10 +188,7 @@ deploy:
     with:
       args: run patch:plugin-auth
 
-  - uses: cli/runNpmCommand
-    name: Patch Cinode API key auth
-    with:
-      args: run patch:cinode-auth
+
 
   - uses: cli/runNpmCommand
     name: Remove PA flow adaptive card

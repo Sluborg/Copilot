@@ -1,6 +1,6 @@
 {
   "name": "magentic2",
-  "version": "1.422.2",
+  "version": "1.428.5",
   "scripts": {
     "compile": "tsp compile ./src/agent/main.tsp --config ./tspconfig.yaml",
     "generate:env": "node scripts/generate-env.js",
@@ -8,7 +8,6 @@
     "patch:plugin-auth": "node scripts/patch-plugin-auth.js",
     "patch:agent-version": "node scripts/patch-agent-version.js",
     "patch:pa-remove-card": "node scripts/patch-pa-remove-card.js",
-    "patch:cinode-auth": "node scripts/patch-cinode-auth.js dev",
     "relay:start": "powershell -ExecutionPolicy Bypass -File \"C:\\\\Dev\\\\Copilot\\\\Magentic2\\\\scripts\\\\start-relay.ps1\"",
     "relay:stop": "powershell -ExecutionPolicy Bypass -File \"C:\\\\Dev\\\\Copilot\\\\Magentic2\\\\scripts\\\\stop-relay.ps1\"",
     "relay:patch:tunnel-url": "powershell -ExecutionPolicy Bypass -File \"C:\\\\Dev\\\\Copilot\\\\Magentic2\\\\scripts\\\\patch-tunnel-url.ps1\"",

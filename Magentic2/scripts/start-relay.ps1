@@ -1,7 +1,7 @@
 $port = 3001
 
 $forbiddenFiles = @(
-  "C:\Dev\Copilot\Magentic2\env\.env.dev.user",
+  # "C:\Dev\Copilot\Magentic2\env\.env.dev.user",
   "C:\Dev\Copilot\Magentic2\env\.env.local"
 )
 $existingForbidden = $forbiddenFiles | Where-Object { Test-Path $_ }
@@ -27,9 +27,7 @@ foreach ($file in $envFiles) {
   }
 }
 
-if ($env:CINODE_API_KEY) {
-  $env:CINODE_BASIC_TOKEN = $env:CINODE_API_KEY
-}
+
 
 $env:TRANSPORT = 'http'
 $env:PORT = "$port"

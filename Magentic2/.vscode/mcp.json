@@ -1,12 +1,6 @@
 {
   "servers": {
-    "cinode": {
-      "type": "http",
-      "url": "https://mcp.cinode.com/_mcp",
-      "headers": {
-        "Authorization": "${env:CINODE_API_KEY}"
-      }
-    },
+
     "workiq": {
       "command": "npx",
       "args": ["-y", "@microsoft/workiq@latest", "mcp"]
