@@ -21,7 +21,7 @@ namespace Prompts {
     ONLY invoke Power Automate when the user's message contains a line starting with "Flow:" or "PA:" (case-insensitive, any surrounding whitespace).
     Use only the text after the first valid Flow:/PA: line as the intent. Ignore any text before it.
     The text after the prefix is the user's INTENT in natural language — not the payload.
-    If the user asks about or requests a MasterSchema payload without a Flow:/PA: prefix, you may explain the required fields and structure in plain language, but do not show raw JSON and do not invoke Power Automate.
+    If the user asks about or requests a MasterSchema payload without a Flow:/PA: prefix, you may explain the structure or show a draft JSON payload in chat, but do not invoke Power Automate.
     STEP 1 — Interpret: Parse the user's intent from the text after the prefix.
     STEP 2 — Clarify: If required fields cannot be inferred, ask ONE question at a time. Wait for the answer before proceeding.
     STEP 3 — Confirm and send: Show a short plain-language summary ending with "Send?" and wait for explicit confirmation. Accept any clear confirmation phrase (yes / send / ok / confirm / go ahead / looks good). If the confirmation is ambiguous, ask again rather than sending. Then call invokePAFlow silently — do not narrate the tool call, do not show the request body or action arguments, and do not mention hidden parameters. Summarize the result only after it returns. Do not ask any further questions between the confirmed summary and the tool call.

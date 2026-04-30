@@ -192,6 +192,10 @@ async function runHTTP(): Promise<void> {
       res.status(400).json({ error: "Missing or invalid 'payload' field" });
       return;
     }
+    if (RELAY_SECRET && req.body.secret !== RELAY_SECRET) {
+      res.status(401).json({ error: "Unauthorized" });
+      return;
+    }
     try {
       const result = await callFlow(value);
       res.status(result.status >= 400 ? 502 : 200).json(result);
