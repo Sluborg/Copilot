@@ -1,0 +1,76 @@
+Make the following changes across three files. Apply all changes exactly as described.
+
+---
+
+FILE 1: src/agent/actions/invokePAFlow.tsp
+
+1. In ACTIONS_METADATA, replace descriptionForModel with:
+   "Send a MasterSchema JSON payload to a Power Automate HTTP trigger flow. The `payload` field must contain a minified single-line JSON object matching MasterSchema exactly — top-level fields: source, operation, and either sharePointData or teamsData. Never pass plain text or the user's natural language. Never wrap in an event envelope (no eventType, no intent fields)."
+
+2. In model PAFlowRequest, rename the field `text: string` to `payload: string` and add this JSDoc comment above it:
+   /** Minified single-line MasterSchema JSON string. Must have top-level fields: source, operation, and either sharePointData or teamsData. Never plain text. Never an event or intent wrapper. Example: {"source":"Teams","operation":"SendToUser","teamsData":{"receivers":["user@example.com"],"message":"hello","sendAs":"Flowbot"}} */
+
+---
+
+FILE 2: flow-relay-mcp-server/src/index.ts
+
+In the app.post("/send-to-flow") handler, replace the body extraction logic:
+
+BEFORE:
+    const { text } = req.body;
+    if (!text || typeof text !== "string") {
+      res.status(400).json({ error: "Missing or invalid 'text' field" });
+      return;
+    }
+    try {
+      const result = await callFlow(text);
+
+AFTER:
+    const body = req.body;
+    const value: string | undefined =
+      typeof body.payload === "string" ? body.payload
+      : typeof body.text === "string" ? body.text
+      : undefined;
+    if (!value) {
+      res.status(400).json({ error: "Missing or invalid 'payload' field" });
+      return;
+    }
+    try {
+      const result = await callFlow(value);
+
+---
+
+FILE 3: src/agent/prompts/instructions.tsp
+
+In the PAYLOAD RULES section, make three changes:
+
+CHANGE A — Replace the MasterSchema reference line:
+
+BEFORE:
+    - MasterSchema.md is the authoritative source of truth for payload structure. Always follow it. Never invent properties or structure outside it. If required structure is unclear, ask one clarifying question.
+
+AFTER:
+    - MasterSchema.md is the authoritative source of truth for payload structure. Always follow it. Never invent properties or structure outside it. If required structure is unclear, ask one clarifying question.
+    - The correct MasterSchema top-level structure is ALWAYS: {"source":"SharePoint|Teams","operation":"<op>", and either "sharePointData":{...} or "teamsData":{...}}. Valid top-level keys are: source, operation, logTitle, description, method, fields, sharePointData, teamsData, metadata. NEVER use: action, eventType, intent, teamsMessage, recipients, body, contentType, messageType, parameters, or any wrapper not in MasterSchema.
+    - Teams example: {"source":"Teams","operation":"SendToUser","teamsData":{"receivers":["user@example.com"],"message":"hello","sendAs":"Flowbot"}}
+    - SharePoint example: {"source":"SharePoint","operation":"GetSchema","sharePointData":{"siteUrl":"https://fujitsuswe.sharepoint.com/sites/SE-LuborgDev","listDisplayName":"MyList"}}
+
+CHANGE B — Add rule about the payload field:
+
+After the MasterSchema lines above, add:
+    - The `payload` field sent to invokePAFlow MUST be a minified single-line MasterSchema JSON object. It must NOT be plain text, a natural language sentence, or wrapped in any event envelope (no eventType, no intent, no parameters wrapper).
+
+CHANGE C — Replace the "NEVER display" line to allow draft mode:
+
+BEFORE:
+    - NEVER display the raw JSON payload, request body, action arguments, tool inputs, or internal values in chat.
+
+AFTER:
+    - When drafting a payload in chat (no Flow:/PA: prefix was used), you MAY show the minified JSON so the user can verify it. When actually calling invokePAFlow, NEVER display the payload, request body, action arguments, or tool inputs in chat.
+
+---
+
+After all changes, run the full deploy sequence:
+npm run compile && npm run patch:pa-spec && npm run patch:plugin-auth && npm run patch:pa-remove-card && atk provision --env dev
+
+The relay (flow-relay-mcp-server) also needs recompiling and a pm2 restart on GCP after the index.ts change.

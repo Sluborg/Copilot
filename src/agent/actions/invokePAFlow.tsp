@@ -12,11 +12,11 @@ namespace PAFlowAPI {
   const ACTIONS_METADATA = #{
     nameForHuman: "Invoke PA Flow",
     descriptionForHuman: "Invoke a Power Automate flow via HTTP trigger.",
-    descriptionForModel: "Send a MasterSchema JSON payload to a Power Automate HTTP trigger flow. The payload field must contain a valid minified single-line MasterSchema JSON object — never plain text."
-  };
+    descriptionForModel: "Send a MasterSchema JSON payload to a Power Automate HTTP trigger flow. The `payload` field must contain a minified single-line JSON object matching MasterSchema exactly — top-level fields: source, operation, and either sharePointData or teamsData. Never pass plain text or the user's natural language. Never wrap in an event envelope (no eventType, no intent fields)."  };
 
   model PAFlowRequest {
-    text: string;
+    /** Minified single-line MasterSchema JSON string. Must have top-level fields: source, operation, and either sharePointData or teamsData. Never plain text. Never an event or intent wrapper. Example: {"source":"Teams","operation":"SendToUser","teamsData":{"receivers":["user@example.com"],"message":"hello","sendAs":"Flowbot"}} */
+    payload: string;
     secret: string = Environment.RELAY_SECRET;
   }
 

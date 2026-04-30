@@ -35,9 +35,9 @@ function getStockholmReleaseStamp() {
 
 (function main() {
   const magenticRoot = path.resolve(__dirname, "..");
-  const repoRoot = path.resolve(magenticRoot, "..");
 
-  const versionPath = path.join(repoRoot, "Version.md");
+  // In flat structure, Version.md is in magenticRoot
+  const versionPath = path.join(magenticRoot, "Version.md");
   const daPath = path.join(magenticRoot, "appPackage", ".generated", "declarativeAgent.json");
   const pkgPath = path.join(magenticRoot, "package.json");
   const lockPath = path.join(magenticRoot, "package-lock.json");

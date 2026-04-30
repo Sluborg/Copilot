@@ -183,13 +183,17 @@ async function runHTTP(): Promise<void> {
 
   // REST endpoint for Agent Toolkit / OpenAPI
   app.post("/send-to-flow", async (req, res) => {
-    const { text } = req.body;
-    if (!text || typeof text !== "string") {
-      res.status(400).json({ error: "Missing or invalid 'text' field" });
+    const body = req.body;
+    const value: string | undefined =
+      typeof body.payload === "string" ? body.payload
+      : typeof body.text === "string" ? body.text
+      : undefined;
+    if (!value) {
+      res.status(400).json({ error: "Missing or invalid 'payload' field" });
       return;
     }
     try {
-      const result = await callFlow(text);
+      const result = await callFlow(value);
       res.status(result.status >= 400 ? 502 : 200).json(result);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : String(err);
